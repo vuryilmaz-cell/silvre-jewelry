@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Ana Sayfa -->
+  <url>
+    <loc>https://silvre.com/</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Ürünler Sayfası -->
+  <url>
+    <loc>https://silvre.com/products.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Kategoriler -->
+  <url>
+    <loc>https://silvre.com/categories.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Hakkımızda -->
+  <url>
+    <loc>https://silvre.com/about.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- İletişim -->
+  <url>
+    <loc>https://silvre.com/contact.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- SSS -->
+  <url>
+    <loc>https://silvre.com/faq.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Kargo ve İade -->
+  <url>
+    <loc>https://silvre.com/shipping.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://silvre.com/returns.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- 
+  NOT: Ürün ve kategori URL'leri backend'den otomatik generate edilmelidir.
+  Aşağıda örnek yapı verilmiştir. Deployment sonrası dinamik sitemap oluşturun.
+  -->
+  
+  <!-- Örnek Kategori URL'leri -->
+  <!-- 
+  <url>
+    <loc>https://silvre.com/kategori/kolyeler</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  -->
+  
+  <!-- Örnek Ürün URL'leri -->
+  <!--
+  <url>
+    <loc>https://silvre.com/urun/gumus-kalp-kolye</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://silvre.com/uploads/kalp-kolye.jpg</image:loc>
+      <image:title>Gümüş Kalp Kolye</image:title>
+    </image:image>
+  </url>
+  -->
+  
+</urlset>

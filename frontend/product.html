@@ -3,7 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ürün Detayı - Silvre Jewelry</title>
+
+    <!-- SEO Meta Tags - Dinamik olarak güncellenecek -->
+    <title>Ürün Detayı - 999 Ayar Gümüş | Silvre Jewelry</title>
+    <meta
+      name="description"
+      content="999 ayar gümüş takı ürün detayı. El yapımı, özel tasarım."
+    />
+    <meta name="keywords" content="gümüş takı, 999 ayar, el yapımı" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="" />
+
+    <!-- Product Schema - Dinamik olarak güncellenecek -->
+    <script type="application/ld+json" id="productSchema">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "",
+        "image": [],
+        "description": "",
+        "sku": "",
+        "brand": {
+          "@type": "Brand",
+          "name": "Silvre"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": "",
+          "priceCurrency": "TRY",
+          "price": "",
+          "availability": "https://schema.org/InStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,6 +60,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- SEO Utils -->
+    <script src="js/seo-utils.js"></script>
     <style>
       .product-detail {
         display: grid;
@@ -588,6 +640,11 @@
         try {
           const product = await api.getProduct(productId);
           currentProduct = product;
+
+          // ✅ SEO Taglarını Güncelle
+          if (window.SEO && window.SEO.updateProductPage) {
+            window.SEO.updateProductPage(product);
+          }
 
           const hasDiscount =
             product.discount_price && product.discount_price < product.price;

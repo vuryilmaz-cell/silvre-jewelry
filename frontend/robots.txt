@@ -1,0 +1,59 @@
+# robots.txt for Silvre Jewelry
+
+# Tüm botlara izin ver
+User-agent: *
+Allow: /
+
+# Admin paneline izin verme
+Disallow: /admin/
+Disallow: /admin/*
+
+# Kullanıcı özel sayfaları
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /profile.html
+Disallow: /orders.html
+Disallow: /favorites.html
+
+# Backend API'ye izin verme
+Disallow: /api/
+
+# Giriş/Kayıt sayfaları (duplicate content önleme)
+Disallow: /login.html
+Disallow: /register.html
+
+# Arama sonuçları (parametreli URL'ler)
+Disallow: /*?*search=
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# Sitemap konumu
+Sitemap: https://silvre.com/sitemap.xml
+
+# Google bot'a özel (opsiyonel)
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing bot'a özel (opsiyonel)
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex bot'a özel (opsiyonel - Türkiye için önemli)
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# Kötü niyetli botları engelle
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

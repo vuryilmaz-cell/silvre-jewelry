@@ -1,0 +1,95 @@
+# .htaccess - SEO ve Performance Optimizasyonu
+
+# Rewrite Engine'i Aç
+RewriteEngine On
+
+# HTTPS'e Yönlendir (Deployment sonrası)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# www olmadan yönlendir (veya tersi)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Trailing slash ekle (klasör URL'leri için)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
+
+# SEO-Friendly URL Rewriting
+# /urunler/gumus-kalp-kolye -> /product.html?slug=gumus-kalp-kolye
+RewriteRule ^urunler/([a-z0-9-]+)$ /product.html?slug=$1 [L,QSA]
+
+# /kategoriler/kolyeler -> /categories.html?category=kolyeler
+RewriteRule ^kategoriler/([a-z0-9-]+)$ /categories.html?category=$1 [L,QSA]
+
+# Statik dosyalar için cache ayarları
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Resimler - 1 yıl
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  
+  # CSS ve JavaScript - 1 ay
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  
+  # Fontlar - 1 yıl
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  
+  # HTML - 1 saat
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# GZIP Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Browser Caching
+<IfModule mod_headers.c>
+  # 1 YIL - Resimler ve fontlar
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|woff|woff2)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  
+  # 1 AY - CSS ve JS
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+  
+  # Security Headers
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Dosya boyutu limiti
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+
+# 404 Hata sayfası
+ErrorDocument 404 /404.html
+
+# Index dosyası sıralaması
+DirectoryIndex index.html index.php
+
+# Dosya listesini engelle
+Options -Indexes
+
+# Hassas dosyalara erişimi engelle
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|db)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
