@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ödeme - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .checkout-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      .checkout-steps {
+        background: white;
+        border: 1px solid rgba(42, 42, 42, 0.08);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+
+      .checkout-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: 2rem;
+      }
+
+      .checkout-title {
+        font-size: 1.75rem;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .step-indicator {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .step {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem;
+        border-radius: 8px;
+        background: #f5f5f5;
+        font-size: 0.875rem;
+        color: #999;
+        transition: all 0.3s;
+      }
+
+      .step.active {
+        background: var(--color-accent);
+        color: white;
+        font-weight: 500;
+      }
+
+      .step.completed {
+        background: #e8f5e9;
+        color: #4caf50;
+      }
+
+      .checkout-section {
+        margin-bottom: 2rem;
+        display: none;
+      }
+
+      .checkout-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-number {
+        width: 32px;
+        height: 32px;
+        background: var(--color-accent);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .form-label-required::after {
+        content: " *";
+        color: #f44336;
+      }
+
+      .form-input,
+      .form-textarea,
+      .form-select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 0.9375rem;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      .form-input:focus,
+      .form-textarea:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .saved-addresses {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .address-card {
+        padding: 1.25rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .address-card:hover {
+        border-color: var(--color-accent);
+        background: var(--color-cream);
+      }
+
+      .address-card.selected {
+        border-color: var(--color-accent);
+        background: var(--color-cream);
+      }
+
+      .address-card-title {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .address-card-default {
+        font-size: 0.75rem;
+        background: #4caf50;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      .address-card-text {
+        font-size: 0.875rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .add-new-address-btn {
+        width: 100%;
+        padding: 1rem;
+        border: 2px dashed #e0e0e0;
+        background: transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        color: var(--color-accent);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .add-new-address-btn:hover {
+        border-color: var(--color-accent);
+        background: var(--color-cream);
+      }
+
+      .payment-methods {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .payment-method {
+        padding: 1.25rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .payment-method:hover {
+        border-color: var(--color-accent);
+        background: var(--color-cream);
+      }
+
+      .payment-method.selected {
+        border-color: var(--color-accent);
+        background: var(--color-cream);
+      }
+
+      .payment-method-icon {
+        width: 48px;
+        height: 48px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .payment-method-info {
+        flex: 1;
+      }
+
+      .payment-method-title {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .payment-method-desc {
+        font-size: 0.875rem;
+        color: #666;
+      }
+
+      .order-review {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: var(--color-cream);
+        border-radius: 8px;
+      }
+
+      .review-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        font-size: 0.9375rem;
+      }
+
+      .review-label {
+        color: #666;
+      }
+
+      .review-value {
+        font-weight: 500;
+      }
+
+      .checkout-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .btn-back,
+      .btn-next {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-back {
+        background: #f5f5f5;
+        color: #333;
+      }
+
+      .btn-back:hover {
+        background: #e0e0e0;
+      }
+
+      .btn-next {
+        background: var(--color-off-black);
+        color: white;
+      }
+
+      .btn-next:hover {
+        background: var(--color-accent);
+      }
+
+      .btn-next:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .order-summary {
+        position: sticky;
+        top: 100px;
+        background: white;
+        border: 1px solid rgba(42, 42, 42, 0.08);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+
+      .summary-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .summary-items {
+        margin-bottom: 1.5rem;
+      }
+
+      .summary-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .summary-item:last-child {
+        border-bottom: none;
+      }
+
+      .summary-item-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        background: #f8f8f8;
+      }
+
+      .summary-item-details {
+        flex: 1;
+      }
+
+      .summary-item-name {
+        font-size: 0.9375rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .summary-item-quantity {
+        font-size: 0.875rem;
+        color: #666;
+      }
+
+      .summary-item-price {
+        font-weight: 500;
+        color: var(--color-accent);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        font-size: 0.9375rem;
+      }
+
+      .summary-label {
+        color: #666;
+      }
+
+      .summary-value {
+        font-weight: 400;
+        color: var(--color-off-black);
+      }
+
+      .summary-total {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--color-border);
+      }
+
+      .summary-total .summary-label {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--color-off-black);
+      }
+
+      .summary-total .summary-value {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--color-accent);
+      }
+
+      @media (max-width: 968px) {
+        .checkout-container {
+          grid-template-columns: 1fr;
+          margin-top: 80px;
+        }
+
+        .order-summary {
+          position: static;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Checkout Content -->
+    <section class="container">
+      <div class="checkout-container">
+        <!-- Checkout Steps -->
+        <div class="checkout-steps">
+          <div class="checkout-header">
+            <h1 class="checkout-title">Ödeme</h1>
+          </div>
+
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step active" data-step="1">1. Adres</div>
+            <div class="step" data-step="2">2. Ödeme</div>
+            <div class="step" data-step="3">3. Onay</div>
+          </div>
+
+          <!-- Step 1: Address -->
+          <div class="checkout-section active" id="step1">
+            <h2 class="section-title">
+              <span class="section-number">1</span>
+              Teslimat Adresi
+            </h2>
+
+            <!-- Saved Addresses -->
+            <div
+              id="savedAddressesContainer"
+              style="display: none; margin-bottom: 2rem"
+            >
+              <h3
+                style="
+                  font-size: 1rem;
+                  margin-bottom: 1rem;
+                  color: var(--text-secondary);
+                "
+              >
+                Kayıtlı Adreslerim
+              </h3>
+              <div class="saved-addresses" id="savedAddressesList">
+                <!-- Addresses will be loaded here -->
+              </div>
+              <button
+                type="button"
+                class="add-new-address-btn"
+                onclick="showNewAddressForm()"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Yeni Adres Ekle
+              </button>
+            </div>
+
+            <div id="addressFormContainer">
+              <form id="addressForm">
+                <div class="form-group">
+                  <label
+                    class="form-label form-label-required"
+                    for="addressTitle"
+                    >Adres Başlığı</label
+                  >
+                  <input
+                    type="text"
+                    id="addressTitle"
+                    class="form-input"
+                    placeholder="Ev, İş, vs."
+                    required
+                  />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label
+                      class="form-label form-label-required"
+                      for="firstName"
+                      >Ad</label
+                    >
+                    <input
+                      type="text"
+                      id="firstName"
+                      class="form-input"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="lastName"
+                      >Soyad</label
+                    >
+                    <input
+                      type="text"
+                      id="lastName"
+                      class="form-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label form-label-required" for="phone"
+                    >Telefon</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="form-input"
+                    placeholder="0532 123 45 67"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label
+                    class="form-label form-label-required"
+                    for="addressLine"
+                    >Adres</label
+                  >
+                  <textarea
+                    id="addressLine"
+                    class="form-textarea"
+                    placeholder="Mahalle, sokak, bina no, daire no"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="city"
+                      >İl</label
+                    >
+                    <input type="text" id="city" class="form-input" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label form-label-required" for="district"
+                      >İlçe</label
+                    >
+                    <input
+                      type="text"
+                      id="district"
+                      class="form-input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="notes">Sipariş Notu</label>
+                  <textarea
+                    id="notes"
+                    class="form-textarea"
+                    placeholder="Varsa teslimat ile ilgili notlarınızı yazın (opsiyonel)"
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="checkout-actions">
+              <button
+                class="btn-back"
+                onclick="window.location.href='/cart.html'"
+              >
+                Sepete Dön
+              </button>
+              <button class="btn-next" onclick="nextStep(2)">Devam Et</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Payment -->
+          <div class="checkout-section" id="step2">
+            <h2 class="section-title">
+              <span class="section-number">2</span>
+              Ödeme Yöntemi
+            </h2>
+
+            <div class="payment-methods">
+              <div
+                class="payment-method selected"
+                data-method="card"
+                onclick="selectPaymentMethod('card')"
+              >
+                <div class="payment-method-icon">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
+                  </svg>
+                </div>
+                <div class="payment-method-info">
+                  <div class="payment-method-title">Kredi/Banka Kartı</div>
+                  <div class="payment-method-desc">Güvenli ödeme (iyzico)</div>
+                </div>
+              </div>
+
+              <div
+                class="payment-method"
+                data-method="transfer"
+                onclick="selectPaymentMethod('transfer')"
+              >
+                <div class="payment-method-icon">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path
+                      d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                    />
+                  </svg>
+                </div>
+                <div class="payment-method-info">
+                  <div class="payment-method-title">Havale/EFT</div>
+                  <div class="payment-method-desc">Banka hesabına havale</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-actions">
+              <button class="btn-back" onclick="prevStep(1)">Geri</button>
+              <button class="btn-next" onclick="nextStep(3)">Devam Et</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Review -->
+          <div class="checkout-section" id="step3">
+            <h2 class="section-title">
+              <span class="section-number">3</span>
+              Sipariş Özeti
+            </h2>
+
+            <div class="order-review" id="orderReview">
+              <!-- Will be populated by JS -->
+            </div>
+
+            <div class="checkout-actions">
+              <button class="btn-back" onclick="prevStep(2)">Geri</button>
+              <button
+                class="btn-next"
+                onclick="completeOrder()"
+                id="completeOrderBtn"
+              >
+                Siparişi Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h2 class="summary-title">Sipariş Özeti</h2>
+
+          <div class="summary-items" id="summaryItems">
+            <!-- Will be populated by JS -->
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">Ara Toplam</span>
+            <span class="summary-value" id="summarySubtotal">0,00 ₺</span>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">Kargo</span>
+            <span class="summary-value" id="summaryShipping">0,00 ₺</span>
+          </div>
+
+          <div class="summary-row summary-total">
+            <span class="summary-label">Toplam</span>
+            <span class="summary-value" id="summaryTotal">0,00 ₺</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      let currentStep = 1;
+      let cart = [];
+      let selectedAddress = null;
+      let selectedPaymentMethod = "card";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Check authentication
+        if (!auth.isAuthenticated()) {
+          showToast("Lütfen giriş yapın", "info");
+          setTimeout(() => {
+            window.location.href = "/login.html?redirect=/checkout.html";
+          }, 1500);
+          return;
+        }
+
+        await loadCart();
+        renderOrderSummary();
+        await loadSavedAddresses();
+
+        // Pre-fill user info
+        const user = auth.getUser();
+        if (user) {
+          document.getElementById("firstName").value =
+            user.full_name?.split(" ")[0] || "";
+          document.getElementById("lastName").value =
+            user.full_name?.split(" ").slice(1).join(" ") || "";
+        }
+      });
+
+      async function loadCart() {
+        try {
+          const data = await api.getCart();
+          cart = data.items || [];
+
+          if (cart.length === 0) {
+            showToast("Sepetiniz boş", "error");
+            setTimeout(() => (window.location.href = "/cart.html"), 1500);
+          }
+        } catch (error) {
+          console.error("Load cart error:", error);
+          cart = cartHelper.getCart();
+
+          if (cart.length === 0) {
+            setTimeout(() => (window.location.href = "/cart.html"), 1500);
+          }
+        }
+      }
+
+      async function loadSavedAddresses() {
+        if (!auth.isAuthenticated()) return;
+
+        try {
+          const data = await api.getAddresses();
+          const addresses = data.addresses || [];
+
+          if (addresses.length === 0) {
+            // No saved addresses, show form directly
+            document.getElementById("savedAddressesContainer").style.display =
+              "none";
+            return;
+          }
+
+          // Show saved addresses
+          document.getElementById("savedAddressesContainer").style.display =
+            "block";
+          const addressesList = document.getElementById("savedAddressesList");
+
+          addressesList.innerHTML = addresses
+            .map(
+              (addr) => `
+            <div class="address-card ${
+              addr.is_default ? "selected" : ""
+            }" onclick="selectSavedAddress(${addr.id})">
+              <div class="address-card-title">
+                ${addr.title}
+                ${
+                  addr.is_default
+                    ? '<span class="address-card-default">Varsayılan</span>'
+                    : ""
+                }
+              </div>
+              <div class="address-card-text">
+                <strong>${addr.first_name} ${addr.last_name}</strong><br>
+                ${addr.phone}<br>
+                ${addr.address_line}<br>
+                ${addr.district}, ${addr.city} ${addr.postal_code || ""}
+              </div>
+            </div>
+          `
+            )
+            .join("");
+
+          // Store addresses globally
+          window.savedAddresses = addresses;
+
+          // If there's a default address, auto-select it
+          const defaultAddr = addresses.find((a) => a.is_default);
+          if (defaultAddr) {
+            selectSavedAddress(defaultAddr.id);
+          }
+        } catch (error) {
+          console.error("Load addresses error:", error);
+        }
+      }
+
+      function selectSavedAddress(addressId) {
+        // Find the address
+        const address = window.savedAddresses.find((a) => a.id === addressId);
+        if (!address) return;
+
+        // Update UI
+        document.querySelectorAll(".address-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+        event.currentTarget.classList.add("selected");
+
+        // Store selected address
+        selectedAddress = {
+          title: address.title,
+          first_name: address.first_name,
+          last_name: address.last_name,
+          phone: address.phone,
+          address_line: address.address_line,
+          city: address.city,
+          district: address.district,
+          postal_code: address.postal_code,
+        };
+
+        // Hide form, show selected address indicator
+        document.getElementById("addressFormContainer").style.display = "none";
+      }
+
+      function showNewAddressForm() {
+        // Hide saved addresses selection
+        document.querySelectorAll(".address-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+
+        // Show form
+        document.getElementById("addressFormContainer").style.display = "block";
+
+        // Clear selected address
+        selectedAddress = null;
+      }
+
+      function renderOrderSummary() {
+        const summaryItems = document.getElementById("summaryItems");
+
+        summaryItems.innerHTML = cart
+          .map((item) => {
+            const imageUrl = item.image
+              ? `${item.image}`
+              : "/images/placeholder.jpg";
+            return `
+                    <div class="summary-item">
+                        <img src="${imageUrl}" alt="${
+              item.name
+            }" class="summary-item-image">
+                        <div class="summary-item-details">
+                            <div class="summary-item-name">${item.name}</div>
+                            <div class="summary-item-quantity">Adet: ${
+                              item.quantity
+                            }</div>
+                        </div>
+                        <div class="summary-item-price">${formatPrice(
+                          item.price * item.quantity
+                        )}</div>
+                    </div>
+                `;
+          })
+          .join("");
+
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        const shipping =
+          subtotal >= APP_CONFIG.FREE_SHIPPING_THRESHOLD
+            ? 0
+            : APP_CONFIG.SHIPPING_COST;
+        const total = subtotal + shipping;
+
+        document.getElementById("summarySubtotal").textContent =
+          formatPrice(subtotal);
+        document.getElementById("summaryShipping").textContent =
+          shipping === 0 ? "Ücretsiz" : formatPrice(shipping);
+        document.getElementById("summaryTotal").textContent =
+          formatPrice(total);
+      }
+
+      function nextStep(step) {
+        // Validate current step
+        if (currentStep === 1) {
+          // Check if address is selected (from saved addresses or form)
+          if (!selectedAddress) {
+            const form = document.getElementById("addressForm");
+            if (!form.checkValidity()) {
+              form.reportValidity();
+              return;
+            }
+
+            // Save address data from form
+            selectedAddress = {
+              title: document.getElementById("addressTitle").value,
+              first_name: document.getElementById("firstName").value,
+              last_name: document.getElementById("lastName").value,
+              phone: document.getElementById("phone").value,
+              address_line: document.getElementById("addressLine").value,
+              city: document.getElementById("city").value,
+              district: document.getElementById("district").value,
+              notes: document.getElementById("notes").value,
+            };
+          }
+        }
+
+        if (currentStep === 3) {
+          renderReview();
+        }
+
+        // Hide current step
+        document
+          .getElementById(`step${currentStep}`)
+          .classList.remove("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.remove("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.add("completed");
+
+        // Show next step
+        currentStep = step;
+        document.getElementById(`step${currentStep}`).classList.add("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.add("active");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function prevStep(step) {
+        // Hide current step
+        document
+          .getElementById(`step${currentStep}`)
+          .classList.remove("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.remove("active");
+
+        // Show previous step
+        currentStep = step;
+        document.getElementById(`step${currentStep}`).classList.add("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.add("active");
+        document
+          .querySelector(`.step[data-step="${currentStep}"]`)
+          .classList.remove("completed");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function selectPaymentMethod(method) {
+        selectedPaymentMethod = method;
+
+        document.querySelectorAll(".payment-method").forEach((el) => {
+          el.classList.remove("selected");
+        });
+
+        document
+          .querySelector(`[data-method="${method}"]`)
+          .classList.add("selected");
+      }
+
+      function renderReview() {
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        const shipping =
+          subtotal >= APP_CONFIG.FREE_SHIPPING_THRESHOLD
+            ? 0
+            : APP_CONFIG.SHIPPING_COST;
+        const total = subtotal + shipping;
+
+        const paymentMethodName =
+          selectedPaymentMethod === "card" ? "Kredi/Banka Kartı" : "Havale/EFT";
+
+        document.getElementById("orderReview").innerHTML = `
+                <h3 style="margin-bottom: 1rem; font-size: 1.125rem; font-weight: 500;">Teslimat Adresi</h3>
+                <div class="review-item">
+                    <span class="review-label">${selectedAddress.title}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-value">${selectedAddress.first_name} ${
+          selectedAddress.last_name
+        }</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-value">${
+                      selectedAddress.address_line
+                    }</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-value">${selectedAddress.district}, ${
+          selectedAddress.city
+        }</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-value">${selectedAddress.phone}</span>
+                </div>
+                
+                <h3 style="margin: 1.5rem 0 1rem; font-size: 1.125rem; font-weight: 500;">Ödeme Yöntemi</h3>
+                <div class="review-item">
+                    <span class="review-value">${paymentMethodName}</span>
+                </div>
+                
+                <h3 style="margin: 1.5rem 0 1rem; font-size: 1.125rem; font-weight: 500;">Ödeme Detayları</h3>
+                <div class="review-item">
+                    <span class="review-label">Ara Toplam</span>
+                    <span class="review-value">${formatPrice(subtotal)}</span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Kargo</span>
+                    <span class="review-value">${
+                      shipping === 0 ? "Ücretsiz" : formatPrice(shipping)
+                    }</span>
+                </div>
+                <div class="review-item" style="border-top: 2px solid var(--color-border); margin-top: 1rem; padding-top: 1rem;">
+                    <span class="review-label" style="font-size: 1.125rem; font-weight: 500; color: var(--color-off-black);">Toplam</span>
+                    <span class="review-value" style="font-size: 1.25rem; color: var(--color-accent);">${formatPrice(
+                      total
+                    )}</span>
+                </div>
+            `;
+      }
+
+      async function completeOrder() {
+        const btn = document.getElementById("completeOrderBtn");
+        btn.disabled = true;
+        btn.textContent = "İşleniyor...";
+
+        try {
+          const subtotal = cart.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          );
+          const shipping =
+            subtotal >= APP_CONFIG.FREE_SHIPPING_THRESHOLD
+              ? 0
+              : APP_CONFIG.SHIPPING_COST;
+          const total = subtotal + shipping;
+
+          const orderData = {
+            items: cart.map((item) => ({
+              product_id: item.product_id,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+            shipping_address: selectedAddress,
+            payment_method: selectedPaymentMethod,
+            subtotal: subtotal,
+            shipping_cost: shipping,
+            total: total,
+            notes: selectedAddress.notes || null,
+          };
+
+          const result = await api.createOrder(orderData);
+
+          showToast("Siparişiniz alındı! Yönlendiriliyorsunuz...", "success");
+
+          // Clear cart
+          cartHelper.clearCart();
+
+          // Redirect to success page or orders
+          setTimeout(() => {
+            window.location.href = `/order-success.html?order=${result.orderId}`;
+          }, 2000);
+        } catch (error) {
+          console.error("Complete order error:", error);
+          showToast(
+            error.message || "Sipariş oluşturulurken hata oluştu",
+            "error"
+          );
+
+          btn.disabled = false;
+          btn.textContent = "Siparişi Tamamla";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sipariş Tamamlandı - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .success-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+        text-align: center;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .success-icon {
+        width: 120px;
+        height: 120px;
+        background: #e8f5e9;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+      }
+
+      .success-icon svg {
+        color: #4caf50;
+      }
+
+      .success-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.5rem;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .success-text {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        color: #666;
+        margin-bottom: 2rem;
+      }
+
+      .order-number {
+        background: var(--color-cream);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      .order-number-label {
+        font-size: 0.875rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+      }
+
+      .order-number-value {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--color-accent);
+      }
+
+      .success-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <a href="/">SILVRE</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="container">
+      <div class="success-container">
+        <div class="success-icon">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+
+        <h1 class="success-title">Siparişiniz Alındı!</h1>
+
+        <p class="success-text">
+          Teşekkür ederiz! Siparişiniz başarıyla oluşturuldu. Kısa süre içinde
+          e-posta adresinize sipariş detayları gönderilecektir.
+        </p>
+
+        <div class="order-number" id="orderNumberBox">
+          <div class="order-number-label">Sipariş Numaranız</div>
+          <div class="order-number-value" id="orderNumber">-</div>
+        </div>
+
+        <div class="success-actions">
+          <a href="/" class="btn btn-primary">Ana Sayfaya Dön</a>
+          <a href="/products.html" class="btn btn-secondary"
+            >Alışverişe Devam Et</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get("order");
+
+        if (orderId) {
+          loadOrderDetails(orderId);
+        }
+      });
+
+      async function loadOrderDetails(orderId) {
+        try {
+          const order = await api.getOrder(orderId);
+          document.getElementById("orderNumber").textContent =
+            order.order_number || orderId;
+        } catch (error) {
+          console.error("Load order error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>

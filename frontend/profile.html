@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profilim - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .profile-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+      }
+
+      .profile-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .profile-header h1 {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        margin-bottom: 0.5rem;
+      }
+
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 3rem;
+      }
+
+      .profile-sidebar {
+        position: sticky;
+        top: 100px;
+        align-self: start;
+      }
+
+      .profile-nav {
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .profile-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--color-border);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .profile-nav-item:last-child {
+        border-bottom: none;
+      }
+
+      .profile-nav-item:hover {
+        background: var(--color-light-grey);
+        color: var(--text-primary);
+      }
+
+      .profile-nav-item.active {
+        background: var(--color-charcoal);
+        color: var(--color-white);
+      }
+
+      .profile-nav-item svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .profile-content {
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+
+      .profile-section {
+        display: none;
+      }
+
+      .profile-section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        font-size: 0.9375rem;
+        transition: border-color 0.3s;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--color-charcoal);
+      }
+
+      .form-input:disabled {
+        background: var(--color-light-grey);
+        cursor: not-allowed;
+      }
+
+      .info-card {
+        background: var(--color-light-grey);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .info-value {
+        color: var(--text-primary);
+      }
+
+      .addresses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .address-card {
+        background: var(--color-light-grey);
+        padding: 1.5rem;
+        border-radius: 8px;
+        position: relative;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+      }
+
+      .address-card.default {
+        border-color: var(--color-charcoal);
+      }
+
+      .address-card:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .address-title {
+        font-weight: 500;
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .default-badge {
+        background: var(--color-charcoal);
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      .address-details {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .address-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .btn-icon {
+        padding: 0.5rem;
+        border: 1px solid var(--color-border);
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex; /* ✅ EKLENDI */
+        align-items: center; /* ✅ EKLENDI */
+        justify-content: center; /* ✅ EKLENDI */
+      }
+
+      .btn-icon svg {
+        /* ✅ YENİ KURAL */
+        width: 18px;
+        height: 18px;
+        display: block;
+      }
+
+      .btn-icon:hover {
+        background: var(--color-charcoal);
+        border-color: var(--color-charcoal);
+      }
+
+      .btn-icon:hover svg {
+        /* ✅ YENİ KURAL */
+        stroke: white;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-secondary);
+      }
+
+      .empty-state svg {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        color: var(--color-silver);
+      }
+
+      @media (max-width: 968px) {
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-sidebar {
+          position: static;
+        }
+
+        .profile-nav {
+          display: flex;
+          overflow-x: auto;
+        }
+
+        .profile-nav-item {
+          white-space: nowrap;
+          border-bottom: none;
+          border-right: 1px solid var(--color-border);
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Profile Container -->
+    <section class="container profile-container">
+      <div class="profile-header">
+        <h1>Profilim</h1>
+        <p style="color: var(--text-secondary)">Hesap bilgilerinizi yönetin</p>
+      </div>
+
+      <div class="profile-grid">
+        <!-- Sidebar Navigation -->
+        <aside class="profile-sidebar">
+          <nav class="profile-nav">
+            <div class="profile-nav-item active" data-section="account">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 4-8 8-8s8 4 8 8" />
+              </svg>
+              Hesap Bilgileri
+            </div>
+            <div class="profile-nav-item" data-section="addresses">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Adreslerim
+            </div>
+            <div class="profile-nav-item" data-section="password">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Şifre Değiştir
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="profile-content">
+          <!-- Account Section -->
+          <div class="profile-section active" id="accountSection">
+            <h2 class="section-title">Hesap Bilgileri</h2>
+
+            <form id="accountForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Ad Soyad</label>
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="fullName"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">E-posta</label>
+                  <input type="email" class="form-input" id="email" disabled />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Telefon</label>
+                  <input
+                    type="tel"
+                    class="form-input"
+                    id="phone"
+                    placeholder="0532 123 45 67"
+                  />
+                </div>
+              </div>
+
+              <div class="info-card">
+                <h3 style="margin-bottom: 1rem; font-size: 1.125rem">
+                  Hesap Detayları
+                </h3>
+                <div class="info-row">
+                  <span class="info-label">Üyelik Tarihi</span>
+                  <span class="info-value" id="memberSince">-</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Hesap Durumu</span>
+                  <span class="info-value" style="color: #4caf50">Aktif</span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Bilgileri Güncelle
+              </button>
+            </form>
+          </div>
+
+          <!-- Addresses Section -->
+          <div class="profile-section" id="addressesSection">
+            <h2 class="section-title">Adreslerim</h2>
+
+            <button
+              class="btn btn-primary"
+              style="margin-bottom: 2rem"
+              onclick="window.location.href='/add-address.html'"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                style="margin-right: 0.5rem"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Yeni Adres Ekle
+            </button>
+
+            <div class="addresses-grid" id="addressesGrid">
+              <div class="empty-state">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <p>Henüz kayıtlı adresiniz yok</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Section -->
+          <div class="profile-section" id="passwordSection">
+            <h2 class="section-title">Şifre Değiştir</h2>
+
+            <form id="passwordForm" style="max-width: 500px">
+              <div class="form-group">
+                <label class="form-label">Mevcut Şifre</label>
+                <input
+                  type="password"
+                  class="form-input"
+                  id="currentPassword"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Yeni Şifre</label>
+                <input
+                  type="password"
+                  class="form-input"
+                  id="newPassword"
+                  required
+                  minlength="6"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Yeni Şifre Tekrar</label>
+                <input
+                  type="password"
+                  class="form-input"
+                  id="newPasswordConfirm"
+                  required
+                  minlength="6"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Şifreyi Güncelle
+              </button>
+            </form>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      let currentUser = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Auth check
+        if (!auth.isAuthenticated()) {
+          window.location.href = "/login.html?redirect=/profile.html";
+          return;
+        }
+
+        // Load user data
+        await loadUserProfile();
+
+        // Init navigation
+        initSectionNavigation();
+
+        // Init forms
+        initAccountForm();
+        initPasswordForm();
+      });
+
+      async function loadUserProfile() {
+        try {
+          const data = await api.getProfile();
+          currentUser = data.user;
+
+          // Populate form
+          document.getElementById("fullName").value =
+            currentUser.full_name || "";
+          document.getElementById("email").value = currentUser.email || "";
+          document.getElementById("phone").value = currentUser.phone || "";
+
+          // Member since
+          if (currentUser.created_at) {
+            const date = new Date(currentUser.created_at);
+            document.getElementById("memberSince").textContent = formatDate(
+              date.toISOString()
+            );
+          }
+        } catch (error) {
+          console.error("Load profile error:", error);
+          showToast("Profil yüklenirken hata oluştu", "error");
+        }
+      }
+
+      async function loadAddresses() {
+        try {
+          const data = await api.getAddresses();
+          const addresses = data.addresses || [];
+
+          const addressesGrid = document.getElementById("addressesGrid");
+
+          if (addresses.length === 0) {
+            addressesGrid.innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <p>Henüz kayıtlı adresiniz yok</p>
+                        </div>
+                    `;
+            return;
+          }
+
+          addressesGrid.innerHTML = addresses
+            .map(
+              (addr) => `
+                    <div class="address-card ${
+                      addr.is_default ? "default" : ""
+                    }">
+                        <div class="address-title">
+                            ${addr.title}
+                            ${
+                              addr.is_default
+                                ? '<span class="default-badge">Varsayılan</span>'
+                                : ""
+                            }
+                        </div>
+                        <div class="address-details">
+                            <strong>${addr.first_name} ${
+                addr.last_name
+              }</strong><br>
+                            ${addr.phone}<br>
+                            ${addr.address_line}<br>
+                            ${addr.district}, ${addr.city} ${
+                addr.postal_code || ""
+              }
+                        </div>
+                        <div class="address-actions">
+                            ${
+                              !addr.is_default
+                                ? `
+                                <button class="btn-icon" onclick="setDefaultAddress(${addr.id})" title="Varsayılan Yap">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/>
+                                    </svg>
+                                </button>
+                            `
+                                : ""
+                            }
+                            <button class="btn-icon" onclick="deleteAddress(${
+                              addr.id
+                            })" title="Sil">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Load addresses error:", error);
+          showToast("Adresler yüklenirken hata oluştu", "error");
+        }
+      }
+
+      async function setDefaultAddress(addressId) {
+        if (!confirm("Bu adresi varsayılan adresiniz yapmak istiyor musunuz?"))
+          return;
+
+        try {
+          await api.setDefaultAddress(addressId);
+          showToast("Varsayılan adres güncellendi", "success");
+          await loadAddresses();
+        } catch (error) {
+          console.error("Set default address error:", error);
+          showToast(error.message || "İşlem başarısız", "error");
+        }
+      }
+
+      async function deleteAddress(addressId) {
+        if (!confirm("Bu adresi silmek istediğinizden emin misiniz?")) return;
+
+        try {
+          await api.deleteAddress(addressId);
+          showToast("Adres silindi", "success");
+          await loadAddresses();
+        } catch (error) {
+          console.error("Delete address error:", error);
+          showToast(error.message || "Silme işlemi başarısız", "error");
+        }
+      }
+
+      function initSectionNavigation() {
+        document.querySelectorAll(".profile-nav-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            const sectionId = item.dataset.section;
+
+            // Update nav active state
+            document
+              .querySelectorAll(".profile-nav-item")
+              .forEach((i) => i.classList.remove("active"));
+            item.classList.add("active");
+
+            // Update section visibility
+            document
+              .querySelectorAll(".profile-section")
+              .forEach((s) => s.classList.remove("active"));
+            document
+              .getElementById(sectionId + "Section")
+              .classList.add("active");
+
+            // Load addresses when addresses tab is clicked
+            if (sectionId === "addresses") {
+              loadAddresses();
+            }
+          });
+        });
+      }
+
+      function initAccountForm() {
+        document
+          .getElementById("accountForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const updateData = {
+              full_name: document.getElementById("fullName").value,
+              phone: document.getElementById("phone").value || null,
+            };
+
+            try {
+              await api.updateProfile(updateData);
+
+              // Update localStorage user data
+              const user = auth.getUser();
+              user.full_name = updateData.full_name;
+              auth.setUser(user);
+
+              showToast("Bilgileriniz güncellendi", "success");
+            } catch (error) {
+              console.error("Update profile error:", error);
+              showToast(error.message || "Güncelleme başarısız", "error");
+            }
+          });
+      }
+
+      function initPasswordForm() {
+        document
+          .getElementById("passwordForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const currentPassword =
+              document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const newPasswordConfirm =
+              document.getElementById("newPasswordConfirm").value;
+
+            if (newPassword !== newPasswordConfirm) {
+              showToast("Yeni şifreler eşleşmiyor", "error");
+              return;
+            }
+
+            if (newPassword.length < 6) {
+              showToast("Şifre en az 6 karakter olmalı", "error");
+              return;
+            }
+
+            try {
+              await api.changePassword(currentPassword, newPassword);
+
+              showToast("Şifreniz güncellendi", "success");
+              document.getElementById("passwordForm").reset();
+            } catch (error) {
+              console.error("Change password error:", error);
+              showToast(error.message || "Şifre değiştirilemedi", "error");
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silvre Jewelry - 925 Ayar Gümüş Takılar</title>
+    <meta
+      name="description"
+      content="El yapımı, minimal tasarım 925 ayar gümüş kolyeler, küpeler ve yüzükler. Türkiye'nin en zarif gümüş takı koleksiyonu."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Hero Section - Beyaz -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Zarif & Lüks</h1>
+        <p>
+          Gümüşle gelen şıklığın en yeni yorumu.<br />Kişiye özel %100 el
+          işçiliği lüks gümüş takılar.
+        </p>
+        <a href="/products.html" class="btn btn-primary">Koleksiyonu Keşfet</a>
+      </div>
+    </section>
+
+    <!-- Hero Section - Video Background
+    <section class="hero">
+      <video class="hero-video" autoplay muted playsinline>
+        <source src="/videos/hero-bg.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Zarif & Lüks</h1>
+        <p>
+          Gümüşle gelen şıklığın en yeni yorumu.<br />Kişiye özel %100 el
+          işçiliği lüks gümüş takılar.
+        </p>
+
+        <a href="/products.html" class="btn btn-primary">Koleksiyonu Keşfet</a>
+      </div>
+    </section>
+    -->
+
+    <!-- Featured Products - Beyaz -->
+    <section class="section section-white">
+      <div class="container">
+        <h2 class="section-title">Öne Çıkan Koleksiyon</h2>
+        <p class="section-subtitle">El yapımı, özel tasarım parçalar</p>
+
+        <div class="products-grid" id="featuredProducts">
+          <div style="grid-column: 1/-1; text-align: center; padding: 4rem">
+            <div class="loading-spinner" style="margin: 0 auto"></div>
+            <p style="margin-top: 1rem; color: var(--text-secondary)">
+              Yükleniyor...
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories - Açık Gri -->
+    <section class="section section-light">
+      <div class="container">
+        <h2 class="section-title">Kategoriler</h2>
+        <p class="section-subtitle">Size özel tasarlanmış koleksiyonlar</p>
+
+        <div
+          id="categoriesGrid"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <!-- Dinamik yüklenecek -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Instagram Feed - Açık Gri -->
+    <section class="section instagram-section">
+      <div class="container">
+        <div class="instagram-header">
+          <h2 class="section-title" style="margin-bottom: 0; text-align: left">
+            @silvre.jewelry
+          </h2>
+          <a
+            href="https://instagram.com/silvre.jewelry"
+            target="_blank"
+            class="btn btn-secondary"
+            >Instagram'da Takip Et</a
+          >
+        </div>
+
+        <div class="instagram-grid">
+          <div class="instagram-item"></div>
+          <div class="instagram-item"></div>
+          <div class="instagram-item"></div>
+          <div class="instagram-item"></div>
+          <div class="instagram-item"></div>
+          <div class="instagram-item"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter - Beyaz -->
+    <section class="section newsletter-section">
+      <div class="container">
+        <div class="newsletter-content">
+          <h2 class="newsletter-title">Yeni Koleksiyonlardan Haberdar Olun</h2>
+          <p class="newsletter-subtitle">
+            Özel kampanyalar ve yeni ürünler için bültene abone olun
+          </p>
+
+          <form class="newsletter-form" id="newsletterForm">
+            <input
+              type="email"
+              class="newsletter-input"
+              placeholder="E-posta adresiniz"
+              required
+            />
+            <button type="submit" class="btn btn-primary">Abone Ol</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>

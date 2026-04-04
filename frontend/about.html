@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .about-hero {
+            text-align: center;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-light-grey) 100%);
+        }
+
+        .about-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .about-section {
+            padding: 5rem 0;
+            background: var(--color-white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-grid.reverse {
+            direction: rtl;
+        }
+
+        .about-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .about-content h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--color-light-grey);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            background: var(--color-white);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--color-charcoal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .value-icon svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-grid.reverse {
+                direction: ltr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Hakkımızda</h1>
+            <p>El işçiliği ve modern tasarımın buluştuğu, her bir detayın özenle işlendiği gümüş takı dünyamıza hoş geldiniz.</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-section">
+        <div class="container">
+            <!-- Story -->
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Hikayemiz</h2>
+                    <p>Silvre Jewelry, 925 ayar gümüş takı tutkunlarının buluşma noktası olarak yola çıktı. Her bir ürünümüz, ustalarımızın yılların deneyimiyle şekillendirdiği, zamansız ve zarif tasarımların bir yansımasıdır.</p>
+                    <p>Geleneksel el işçiliğini modern tasarım anlayışıyla birleştirerek, her anınıza değer katan özel parçalar yaratıyoruz. Kalite, zarafet ve özgünlük bizim için sadece kelimeler değil, her ürünümüzün temel prensipleridir.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/images/about-story.jpg" alt="Hikayemiz" onerror="this.src='https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800'">
+                </div>
+            </div>
+
+            <!-- Mission -->
+            <div class="about-grid reverse">
+                <div class="about-content">
+                    <h2>Misyonumuz</h2>
+                    <p>Her kadının kendini özel hissetmesini sağlayacak, kaliteli ve erişilebilir 925 ayar gümüş takılar sunmak. Sadece bir aksesuar değil, kişiliğinizi yansıtan ve hikayenizin bir parçası olan parçalar yaratmak.</p>
+                    <p>Müşteri memnuniyetini her zaman ön planda tutarak, güvenilir alışveriş deneyimi sunmak ve her detayda mükemmelliği hedeflemek temel misyonumuzdur.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/images/about-mission.jpg" alt="Misyonumuz" onerror="this.src='https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800'">
+                </div>
+            </div>
+
+            <!-- Values -->
+            <div style="text-align: center; margin: 5rem 0 3rem;">
+                <h2 style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 1rem;">Değerlerimiz</h2>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Her adımımızda bizi yönlendiren temel prensipler</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <h3>Kalite</h3>
+                    <p>925 ayar gümüş ve titiz işçilikle üretilmiş, uzun ömürlü takılar.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <h3>Özen</h3>
+                    <p>Her bir ürün, sevgiyle ve özenle tasarlanıp üretilir.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Güven</h3>
+                    <p>Şeffaf ve güvenilir bir alışveriş deneyimi sunuyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

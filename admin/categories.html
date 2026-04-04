@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kategoriler - Admin Panel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>SILVRE</h1>
+          <p>Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/index.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="6" height="6" />
+              <rect x="11" y="3" width="6" height="6" />
+              <rect x="3" y="11" width="6" height="6" />
+              <rect x="11" y="11" width="6" height="6" />
+            </svg>
+            Dashboard
+          </a>
+
+          <a href="/products.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="14" height="14" rx="2" />
+            </svg>
+            Ürünler
+          </a>
+
+          <a href="/orders.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M3 3H5L6.5 13H16.5L18 6H6" />
+              <circle cx="7" cy="17" r="1" fill="currentColor" />
+              <circle cx="15" cy="17" r="1" fill="currentColor" />
+            </svg>
+            Siparişler
+          </a>
+
+          <a href="/categories.html" class="nav-item active">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M4 6h12M4 10h12M4 14h12" />
+            </svg>
+            Kategoriler
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="logout-btn" id="logoutBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M14 16l4-4-4-4M18 12H8M8 16V4" />
+            </svg>
+            Çıkış Yap
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="content-header">
+          <h2>Kategoriler</h2>
+          <button class="btn btn-primary" id="addCategoryBtn">
+            + Yeni Kategori
+          </button>
+        </header>
+
+        <div class="content-section">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Görsel</th>
+                  <th>Kategori Adı</th>
+                  <th>Slug</th>
+                  <th>Açıklama</th>
+                  <th>Sıra</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesTable">
+                <tr>
+                  <td colspan="7" class="loading">Yükleniyor...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal" id="categoryModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">Yeni Kategori</h3>
+          <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+
+        <form id="categoryForm">
+          <input type="hidden" id="categoryId" />
+
+          <div class="form-group">
+            <label class="form-label">Kategori Adı</label>
+            <input type="text" class="form-input" id="categoryName" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Slug (URL)</label>
+            <input type="text" class="form-input" id="categorySlug" required />
+            <small style="color: #666; font-size: 0.875rem"
+              >Otomatik oluşturulur</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Açıklama</label>
+            <textarea
+              class="form-input"
+              id="categoryDescription"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Cinsiyet</label>
+            <select class="form-input" id="categoryGender">
+              <option value="unisex">Unisex</option>
+              <option value="kadın">Kadın</option>
+              <option value="erkek">Erkek</option>
+              <option value="çocuk">Çocuk</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kategori Görseli</label>
+            <div style="display: flex; align-items: center; gap: 1rem">
+              <img
+                id="categoryImagePreview"
+                src=""
+                alt="Kategori görseli"
+                style="
+                  width: 100px;
+                  height: 100px;
+                  object-fit: cover;
+                  border-radius: 8px;
+                  border: 1px solid #333;
+                  display: none;
+                "
+              />
+              <div style="flex: 1">
+                <input
+                  type="file"
+                  id="categoryImageInput"
+                  accept="image/*"
+                  style="display: none"
+                />
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="document.getElementById('categoryImageInput').click()"
+                  style="width: 100%"
+                >
+                  Görsel Seç
+                </button>
+                <small
+                  style="
+                    color: #666;
+                    font-size: 0.875rem;
+                    display: block;
+                    margin-top: 0.5rem;
+                  "
+                >
+                  Önerilen: 400x400px, maksimum 2MB
+                </small>
+              </div>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="removeImageBtn"
+                onclick="removeImage()"
+                style="display: none"
+              >
+                Kaldır
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Sıra</label>
+            <input
+              type="number"
+              class="form-input"
+              id="categoryOrder"
+              value="0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <input type="checkbox" id="categoryActive" checked /> Aktif
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: flex-end">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+              İptal
+            </button>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="toastContainer"
+      style="position: fixed; top: 100px; right: 20px; z-index: 10000"
+    ></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadCategories();
+        initButtons();
+        initLogout();
+      });
+
+      function initButtons() {
+        document
+          .getElementById("addCategoryBtn")
+          .addEventListener("click", () => {
+            document.getElementById("modalTitle").textContent = "Yeni Kategori";
+            document.getElementById("categoryForm").reset();
+            document.getElementById("categoryId").value = "";
+            document.getElementById("categoryActive").checked = true;
+            removeImage();
+            document.getElementById("categoryModal").classList.add("active");
+          });
+
+        document
+          .getElementById("closeModal")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("cancelBtn")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("categoryForm")
+          .addEventListener("submit", saveCategory);
+
+        document
+          .getElementById("categoryName")
+          .addEventListener("input", (e) => {
+            const slug = slugify(e.target.value);
+            document.getElementById("categorySlug").value = slug;
+          });
+
+        document
+          .getElementById("categoryImageInput")
+          .addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Dosya boyutu kontrolü (2MB)
+            if (file.size > 2 * 1024 * 1024) {
+              showToast("Görsel boyutu 2MB'dan küçük olmalıdır", "error");
+              e.target.value = "";
+              return;
+            }
+
+            // Önizleme göster
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const preview = document.getElementById("categoryImagePreview");
+              preview.src = event.target.result;
+              preview.style.display = "block";
+              document.getElementById("removeImageBtn").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          });
+      }
+
+      function initLogout() {
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          if (confirm("Çıkış yapmak istediğinize emin misiniz?")) {
+            localStorage.clear();
+            window.location.href = "/login.html";
+          }
+        });
+      }
+
+      function closeModal() {
+        document.getElementById("categoryModal").classList.remove("active");
+        removeImage();
+      }
+
+      function removeImage() {
+        document.getElementById("categoryImageInput").value = "";
+        document.getElementById("categoryImagePreview").src = "";
+        document.getElementById("categoryImagePreview").style.display = "none";
+        document.getElementById("removeImageBtn").style.display = "none";
+      }
+
+      function slugify(text) {
+        const trMap = {
+          ç: "c",
+          Ç: "c",
+          ğ: "g",
+          Ğ: "g",
+          ı: "i",
+          İ: "i",
+          ö: "o",
+          Ö: "o",
+          ş: "s",
+          Ş: "s",
+          ü: "u",
+          Ü: "u",
+        };
+
+        return text
+          .split("")
+          .map((char) => trMap[char] || char)
+          .join("")
+          .toLowerCase()
+          .trim()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/[\s_-]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      }
+
+      async function loadCategories() {
+        const tbody = document.getElementById("categoriesTable");
+
+        try {
+          const data = await api.getCategories();
+
+          if (data.categories && data.categories.length > 0) {
+            tbody.innerHTML = data.categories
+              .map(
+                (cat) => `
+                        <tr>
+                            <td>
+                                ${
+                                  cat.image_url
+                                    ? `<img src="${cat.image_url}" alt="${cat.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">`
+                                    : '<div style="width: 50px; height: 50px; background: #222; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666;">Görsel Yok</div>'
+                                }
+                            </td>
+                            <td><strong>${cat.name}</strong></td>
+                            <td>${cat.slug}</td>
+                            <td>${cat.description || "-"}</td>
+                            <td>${cat.display_order}</td>
+                            <td>
+                                <span class="status-badge ${
+                                  cat.is_active ? "confirmed" : "cancelled"
+                                }">
+                                    ${cat.is_active ? "Aktif" : "Pasif"}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-secondary" onclick="editCategory(${
+                                  cat.id
+                                })">Düzenle</button>
+                                <button class="btn btn-sm btn-secondary" onclick="deleteCategory(${
+                                  cat.id
+                                })">Sil</button>
+                            </td>
+                        </tr>
+                    `
+              )
+              .join("");
+          } else {
+            tbody.innerHTML =
+              '<tr><td colspan="7" style="text-align: center; padding: 2rem;">Kategori bulunamadı</td></tr>';
+          }
+        } catch (error) {
+          console.error("Load categories error:", error);
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align: center; color: red;">Kategoriler yüklenirken hata oluştu</td></tr>';
+        }
+      }
+
+      async function saveCategory(e) {
+        e.preventDefault();
+
+        const id = document.getElementById("categoryId").value;
+        const imageFile =
+          document.getElementById("categoryImageInput").files[0];
+
+        try {
+          const token = localStorage.getItem("silvre_auth_token");
+          const formData = new FormData();
+
+          formData.append(
+            "name",
+            document.getElementById("categoryName").value
+          );
+          formData.append(
+            "slug",
+            document.getElementById("categorySlug").value
+          );
+          formData.append(
+            "description",
+            document.getElementById("categoryDescription").value || ""
+          );
+          formData.append(
+            "gender",
+            document.getElementById("categoryGender").value
+          );
+          formData.append(
+            "display_order",
+            document.getElementById("categoryOrder").value
+          );
+          formData.append(
+            "is_active",
+            document.getElementById("categoryActive").checked ? "1" : "0"
+          );
+
+          if (imageFile) {
+            formData.append("image", imageFile);
+          }
+
+          const url = id
+            ? `http://localhost:5000/api/categories/${id}`
+            : "http://localhost:5000/api/categories";
+
+          const response = await fetch(url, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error?.message || "Kayıt başarısız");
+          }
+
+          showToast(
+            id ? "Kategori güncellendi" : "Kategori eklendi",
+            "success"
+          );
+          closeModal();
+          await loadCategories();
+        } catch (error) {
+          console.error("Save category error:", error);
+          showToast(error.message || "Kayıt sırasında hata oluştu", "error");
+        }
+      }
+
+      async function editCategory(id) {
+        try {
+          const data = await api.getCategories();
+          const category = data.categories.find((c) => c.id === id);
+
+          if (!category) {
+            showToast("Kategori bulunamadı", "error");
+            return;
+          }
+
+          document.getElementById("modalTitle").textContent =
+            "Kategori Düzenle";
+          document.getElementById("categoryId").value = category.id;
+          document.getElementById("categoryName").value = category.name;
+          document.getElementById("categorySlug").value = category.slug;
+          document.getElementById("categoryDescription").value =
+            category.description || "";
+          document.getElementById("categoryGender").value =
+            category.gender || "unisex";
+          document.getElementById("categoryOrder").value =
+            category.display_order;
+          document.getElementById("categoryActive").checked =
+            category.is_active === 1;
+
+          // Mevcut görseli göster
+          const preview = document.getElementById("categoryImagePreview");
+          const removeBtn = document.getElementById("removeImageBtn");
+
+          if (category.image_url) {
+            preview.src = category.image_url;
+            preview.style.display = "block";
+            removeBtn.style.display = "block";
+          } else {
+            preview.src = "";
+            preview.style.display = "none";
+            removeBtn.style.display = "none";
+          }
+
+          document.getElementById("categoryImageInput").value = "";
+          document.getElementById("categoryModal").classList.add("active");
+        } catch (error) {
+          console.error("Edit category error:", error);
+          showToast("Kategori yüklenirken hata oluştu", "error");
+        }
+      }
+
+      async function deleteCategory(id) {
+        if (
+          !confirm(
+            "Bu kategoriyi silmek istediğinize emin misiniz?\n\nKategoriye bağlı ürünler de silinecektir!"
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const token = localStorage.getItem("silvre_auth_token");
+          const response = await fetch(
+            `http://localhost:5000/api/categories/${id}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error?.message || "Silme başarısız");
+          }
+
+          showToast("Kategori silindi", "success");
+          await loadCategories();
+        } catch (error) {
+          console.error("Delete category error:", error);
+          showToast(error.message || "Silme sırasında hata oluştu", "error");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Siparişlerim - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .orders-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .page-header h1 {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-header p {
+        color: var(--text-secondary);
+      }
+
+      .orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .order-card {
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+      }
+
+      .order-card:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .order-header {
+        background: var(--color-light-grey);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .order-info {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .order-info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .order-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .order-value {
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      .order-number {
+        font-family: monospace;
+        font-size: 0.9rem;
+      }
+
+      .order-status {
+        padding: 0.375rem 0.875rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .status-confirmed {
+        background: #cce5ff;
+        color: #004085;
+      }
+
+      .status-processing {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .status-shipped {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-delivered {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-cancelled {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .order-body {
+        padding: 1.5rem;
+      }
+
+      .order-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .order-item {
+        display: flex;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .order-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .order-item-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid var(--color-border);
+        flex-shrink: 0;
+      }
+
+      .order-item-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .order-item-name {
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      .order-item-meta {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .order-item-price {
+        font-weight: 500;
+        color: var(--text-primary);
+        text-align: right;
+      }
+
+      .order-summary {
+        background: var(--color-light-grey);
+        padding: 1.25rem;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9375rem;
+      }
+
+      .summary-row.total {
+        font-size: 1.125rem;
+        font-weight: 600;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--color-border);
+        margin-top: 0.5rem;
+      }
+
+      .order-address {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .address-title {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+      }
+
+      .address-details {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-size: 0.9375rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+      }
+
+      .empty-state svg {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1.5rem;
+        color: var(--color-silver);
+      }
+
+      .empty-state h3 {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+
+      .empty-state p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      @media (max-width: 640px) {
+        .order-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .order-info {
+          width: 100%;
+          gap: 1rem;
+        }
+
+        .order-item {
+          flex-direction: column;
+        }
+
+        .order-item-image {
+          width: 100%;
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Orders Container -->
+    <section class="container orders-container">
+      <div class="page-header">
+        <h1>Siparişlerim</h1>
+        <p>Geçmiş siparişlerinizi görüntüleyin</p>
+      </div>
+
+      <div id="ordersContainer">
+        <!-- Orders will be loaded here -->
+        <div class="empty-state">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path
+              d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+            />
+          </svg>
+          <h3>Yükleniyor...</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Auth check
+        if (!auth.isAuthenticated()) {
+          window.location.href = "/login.html?redirect=/orders.html";
+          return;
+        }
+
+        await loadOrders();
+      });
+
+      async function loadOrders() {
+        try {
+          const data = await api.getMyOrders();
+          const orders = data.orders || [];
+
+          const container = document.getElementById("ordersContainer");
+
+          if (orders.length === 0) {
+            container.innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="9" cy="21" r="1"/>
+                                <circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                            <h3>Henüz siparişiniz yok</h3>
+                            <p>Alışverişe başlamak için ürünlerimize göz atın</p>
+                            <a href="/products.html" class="btn btn-primary">Ürünleri Keşfet</a>
+                        </div>
+                    `;
+            return;
+          }
+
+          container.innerHTML = `
+                    <div class="orders-list">
+                        ${orders.map((order) => renderOrder(order)).join("")}
+                    </div>
+                `;
+        } catch (error) {
+          console.error("Load orders error:", error);
+          document.getElementById("ordersContainer").innerHTML = `
+                    <div class="empty-state">
+                        <h3>Siparişler yüklenemedi</h3>
+                        <p>${error.message || "Bir hata oluştu"}</p>
+                        <button onclick="loadOrders()" class="btn btn-primary">Tekrar Dene</button>
+                    </div>
+                `;
+        }
+      }
+
+      function renderOrder(order) {
+        const statusText = getStatusText(order.status);
+        const statusClass = `status-${order.status}`;
+
+        return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <div class="order-info-item">
+                                <span class="order-label">Sipariş No</span>
+                                <span class="order-value order-number">${
+                                  order.order_number
+                                }</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-label">Tarih</span>
+                                <span class="order-value">${formatDate(
+                                  order.created_at
+                                )}</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-label">Tutar</span>
+                                <span class="order-value">${formatPrice(
+                                  order.total
+                                )}</span>
+                            </div>
+                        </div>
+                        <span class="order-status ${statusClass}">${statusText}</span>
+                    </div>
+
+                    <div class="order-body">
+                        <div class="order-items">
+                            ${order.items
+                              .map((item) => renderOrderItem(item))
+                              .join("")}
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Ara Toplam</span>
+                                <span>${formatPrice(order.subtotal)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Kargo</span>
+                                <span>${
+                                  order.shipping_cost > 0
+                                    ? formatPrice(order.shipping_cost)
+                                    : "Ücretsiz"
+                                }</span>
+                            </div>
+                            ${
+                              order.discount_amount > 0
+                                ? `
+                                <div class="summary-row">
+                                    <span>İndirim</span>
+                                    <span>-${formatPrice(
+                                      order.discount_amount
+                                    )}</span>
+                                </div>
+                            `
+                                : ""
+                            }
+                            <div class="summary-row total">
+                                <span>Toplam</span>
+                                <span>${formatPrice(order.total)}</span>
+                            </div>
+                        </div>
+
+                        ${
+                          order.shipping_name
+                            ? `
+                            <div class="order-address">
+                                <div class="address-title">Teslimat Adresi</div>
+                                <div class="address-details">
+                                    <strong>${order.shipping_name}</strong><br>
+                                    ${order.shipping_location}
+                                </div>
+                            </div>
+                        `
+                            : ""
+                        }
+
+                        ${
+                          order.tracking_number
+                            ? `
+                            <div class="order-address">
+                                <div class="address-title">Kargo Takip</div>
+                                <div class="address-details">
+                                    Takip No: <strong>${order.tracking_number}</strong>
+                                </div>
+                            </div>
+                        `
+                            : ""
+                        }
+                    </div>
+                </div>
+            `;
+      }
+
+      function renderOrderItem(item) {
+        const imageUrl = item.image
+          ? `${item.image}`
+          : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect fill="%23f5f5f5" width="80" height="80"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="10"%3EGörsel Yok%3C/text%3E%3C/svg%3E';
+
+        return `
+        <div class="order-item">
+            <img src="${imageUrl}" alt="${
+          item.name
+        }" class="order-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\'%3E%3Crect fill=\\'%23f5f5f5\\' width=\\'80\\' height=\\'80\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' dy=\\'.3em\\' fill=\\'%23999\\' font-size=\\'10\\'%3EGörsel Yok%3C/text%3E%3C/svg%3E'">
+            <div class="order-item-details">
+                <div class="order-item-name">${item.name}</div>
+                <div class="order-item-meta">Adet: ${item.quantity}</div>
+                <div class="order-item-meta">Birim Fiyat: ${formatPrice(
+                  item.price
+                )}</div>
+            </div>
+            <div class="order-item-price">
+                ${formatPrice(item.subtotal)}
+            </div>
+        </div>
+    `;
+      }
+
+      function getStatusText(status) {
+        const statusMap = {
+          pending: "Beklemede",
+          confirmed: "Onaylandı",
+          processing: "Hazırlanıyor",
+          shipped: "Kargoda",
+          delivered: "Teslim Edildi",
+          cancelled: "İptal Edildi",
+        };
+        return statusMap[status] || status;
+      }
+    </script>
+  </body>
+</html>

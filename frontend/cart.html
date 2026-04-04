@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sepetim - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .cart-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      .cart-items {
+        background: white;
+        border: 1px solid rgba(42, 42, 42, 0.08);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: 2rem;
+      }
+
+      .cart-title {
+        font-size: 1.75rem;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .cart-count {
+        color: var(--color-text-light);
+        font-size: 0.9375rem;
+      }
+
+      .cart-item {
+        display: grid;
+        grid-template-columns: 120px 1fr auto;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .cart-item:last-child {
+        border-bottom: none;
+      }
+
+      .cart-item-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        background: #f8f8f8;
+      }
+
+      .cart-item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .cart-item-name {
+        font-size: 1.125rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+        color: var(--color-off-black);
+      }
+
+      .cart-item-category {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin-bottom: 1rem;
+      }
+
+      .cart-item-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .cart-quantity {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .cart-quantity-btn {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 1rem;
+      }
+
+      .cart-quantity-btn:hover {
+        background: var(--color-cream);
+      }
+
+      .cart-quantity-value {
+        width: 40px;
+        text-align: center;
+        border-left: 1px solid var(--color-border);
+        border-right: 1px solid var(--color-border);
+        font-size: 0.9375rem;
+      }
+
+      .cart-item-remove {
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        cursor: pointer;
+        font-size: 0.875rem;
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+
+      .cart-item-remove:hover {
+        color: #f44336;
+      }
+
+      .cart-item-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .cart-item-price {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: var(--color-accent);
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: 4rem 2rem;
+      }
+
+      .empty-cart-icon {
+        margin-bottom: 1.5rem;
+        opacity: 0.3;
+      }
+
+      .empty-cart-title {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+      }
+
+      .empty-cart-text {
+        color: var(--color-text-light);
+        margin-bottom: 2rem;
+      }
+
+      .cart-summary {
+        position: sticky;
+        top: 100px;
+        background: white;
+        border: 1px solid rgba(42, 42, 42, 0.08);
+        border-radius: 8px;
+        padding: 2rem;
+      }
+
+      .summary-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        font-size: 0.9375rem;
+      }
+
+      .summary-label {
+        color: var(--color-text-light);
+      }
+
+      .summary-value {
+        font-weight: 400;
+        color: var(--color-off-black);
+      }
+
+      .summary-shipping {
+        color: #4caf50;
+      }
+
+      .summary-total {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--color-border);
+      }
+
+      .summary-total .summary-label {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--color-off-black);
+      }
+
+      .summary-total .summary-value {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--color-accent);
+      }
+
+      .btn-checkout {
+        width: 100%;
+        padding: 1.25rem;
+        background: var(--color-off-black);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: background 0.3s;
+      }
+
+      .btn-checkout:hover {
+        background: var(--color-accent);
+      }
+
+      .continue-shopping {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        color: var(--color-text-light);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+      }
+
+      .continue-shopping:hover {
+        color: var(--color-accent);
+      }
+
+      .free-shipping-notice {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 1rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      @media (max-width: 968px) {
+        .cart-container {
+          grid-template-columns: 1fr;
+          margin-top: 80px;
+        }
+
+        .cart-summary {
+          position: static;
+        }
+
+        .cart-item {
+          grid-template-columns: 80px 1fr;
+        }
+
+        .cart-item-image {
+          width: 80px;
+          height: 80px;
+        }
+
+        .cart-item-right {
+          grid-column: 1/-1;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Cart Content -->
+    <section class="container">
+      <div class="cart-container" id="cartContainer">
+        <!-- Loading state -->
+        <div style="grid-column: 1/-1; text-align: center; padding: 4rem">
+          <div class="loading-spinner" style="margin: 0 auto"></div>
+          <p style="margin-top: 1rem">Sepetiniz yükleniyor...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      let cart = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadCart();
+      });
+
+      async function loadCart() {
+        try {
+          if (auth.isAuthenticated()) {
+            // Load from API
+            const data = await api.getCart();
+            cart = data.items || [];
+          } else {
+            // Load from localStorage
+            cart = cartHelper.getCart();
+          }
+
+          renderCart();
+        } catch (error) {
+          console.error("Load cart error:", error);
+          cart = cartHelper.getCart();
+          renderCart();
+        }
+      }
+
+      function renderCart() {
+        const container = document.getElementById("cartContainer");
+
+        if (cart.length === 0) {
+          container.innerHTML = `
+                    <div class="cart-items" style="grid-column: 1/-1;">
+                        <div class="empty-cart">
+                            <div class="empty-cart-icon">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <circle cx="9" cy="21" r="1"/>
+                                    <circle cx="20" cy="21" r="1"/>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                </svg>
+                            </div>
+                            <h2 class="empty-cart-title">Sepetiniz Boş</h2>
+                            <p class="empty-cart-text">Alışverişe başlamak için ürünlerimize göz atın</p>
+                            <a href="/products.html" class="btn btn-primary">Ürünleri Keşfet</a>
+                        </div>
+                    </div>
+                `;
+          return;
+        }
+
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        const shippingCost =
+          subtotal >= APP_CONFIG.FREE_SHIPPING_THRESHOLD
+            ? 0
+            : APP_CONFIG.SHIPPING_COST;
+        const total = subtotal + shippingCost;
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        container.innerHTML = `
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <div class="cart-header">
+                        <h1 class="cart-title">Sepetim</h1>
+                        <span class="cart-count">${itemCount} Ürün</span>
+                    </div>
+                    
+                    ${cart.map((item) => renderCartItem(item)).join("")}
+                </div>
+                
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h2 class="summary-title">Sipariş Özeti</h2>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Ara Toplam</span>
+                        <span class="summary-value">${formatPrice(
+                          subtotal
+                        )}</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Kargo</span>
+                        <span class="summary-value ${
+                          shippingCost === 0 ? "summary-shipping" : ""
+                        }">
+                            ${
+                              shippingCost === 0
+                                ? "Ücretsiz"
+                                : formatPrice(shippingCost)
+                            }
+                        </span>
+                    </div>
+                    
+                    ${
+                      subtotal < APP_CONFIG.FREE_SHIPPING_THRESHOLD
+                        ? `
+                        <div class="free-shipping-notice">
+                            ${formatPrice(
+                              APP_CONFIG.FREE_SHIPPING_THRESHOLD - subtotal
+                            )} daha alışveriş yapın, 
+                            kargo ücretsiz!
+                        </div>
+                    `
+                        : ""
+                    }
+                    
+                    <div class="summary-row summary-total">
+                        <span class="summary-label">Toplam</span>
+                        <span class="summary-value">${formatPrice(total)}</span>
+                    </div>
+                    
+                    <button class="btn-checkout" onclick="proceedToCheckout()">
+                        Alışverişi Tamamla
+                    </button>
+                    
+                    <a href="/products.html" class="continue-shopping">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Alışverişe Devam Et
+                    </a>
+                </div>
+            `;
+      }
+
+      function renderCartItem(item) {
+        const imageUrl = item.image
+          ? `${item.image}`
+          : "/images/placeholder.jpg";
+        const itemTotal = item.price * item.quantity;
+
+        return `
+                <div class="cart-item">
+                    <img src="${imageUrl}" alt="${
+          item.name
+        }" class="cart-item-image">
+                    
+                    <div class="cart-item-details">
+                        <div>
+                            <h3 class="cart-item-name">${item.name}</h3>
+                            <p class="cart-item-category">925 Ayar Gümüş</p>
+                        </div>
+                        
+                        <div class="cart-item-controls">
+                            <div class="cart-quantity">
+                                <button class="cart-quantity-btn" onclick="updateQuantity(${
+                                  item.product_id
+                                }, ${item.quantity - 1})">−</button>
+                                <span class="cart-quantity-value">${
+                                  item.quantity
+                                }</span>
+                                <button class="cart-quantity-btn" onclick="updateQuantity(${
+                                  item.product_id
+                                }, ${item.quantity + 1})">+</button>
+                            </div>
+                            
+                            <button class="cart-item-remove" onclick="removeFromCart(${
+                              item.product_id
+                            })">
+                                Kaldır
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-item-right">
+                        <span class="cart-item-price">${formatPrice(
+                          itemTotal
+                        )}</span>
+                    </div>
+                </div>
+            `;
+      }
+
+      async function updateQuantity(productId, newQuantity) {
+        if (newQuantity < 1) {
+          removeFromCart(productId);
+          return;
+        }
+
+        try {
+          if (auth.isAuthenticated()) {
+            await api.updateCartItem(productId, newQuantity);
+          } else {
+            cartHelper.updateQuantity(productId, newQuantity);
+          }
+
+          await loadCart();
+        } catch (error) {
+          console.error("Update quantity error:", error);
+          showToast("Miktar güncellenirken hata oluştu", "error");
+        }
+      }
+
+      async function removeFromCart(productId) {
+        if (!confirm("Bu ürünü sepetten çıkarmak istediğinize emin misiniz?"))
+          return;
+
+        try {
+          if (auth.isAuthenticated()) {
+            await api.removeFromCart(productId);
+          } else {
+            cartHelper.removeFromCart(productId);
+          }
+
+          showToast("Ürün sepetten çıkarıldı", "success");
+          await loadCart();
+          cartHelper.updateCartCount();
+        } catch (error) {
+          console.error("Remove from cart error:", error);
+          showToast("Ürün çıkarılırken hata oluştu", "error");
+        }
+      }
+
+      function proceedToCheckout() {
+        if (!auth.isAuthenticated()) {
+          showToast("Alışverişi tamamlamak için giriş yapmalısınız", "info");
+          setTimeout(() => {
+            window.location.href = "/login.html?redirect=/cart.html";
+          }, 1500);
+          return;
+        }
+
+        window.location.href = "/checkout.html";
+      }
+    </script>
+  </body>
+</html>

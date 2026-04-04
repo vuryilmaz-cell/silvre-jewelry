@@ -1,0 +1,443 @@
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <a href="/">
+        <img
+          src="/images/logo-ver3.png"
+          alt="SILVRE"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span style="display: none">SILVRE</span>
+      </a>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+      <button class="nav-menu-close" id="navMenuClose">&times;</button>
+      <a href="/" class="nav-link">Ana Sayfa</a>
+      <a href="/products.html" class="nav-link">Ürünler</a>
+      <!-- Kategoriler dinamik yüklenecek -->
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="nav-actions">
+      <!-- Hamburger Menu Button - Desktop ve Mobile -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menü">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      
+      <a href="/cart.html" class="nav-icon" aria-label="Sepet">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M3 3H5L6.5 13H16.5L18 6H6" />
+          <circle cx="7" cy="17" r="1" fill="currentColor" />
+          <circle cx="15" cy="17" r="1" fill="currentColor" />
+        </svg>
+        <span class="badge" id="cartCount">0</span>
+      </a>
+
+      <!-- User Menu -->
+      <div class="user-menu" id="userMenuContainer">
+        <a
+          href="/login.html"
+          class="nav-icon"
+          aria-label="Giriş"
+          id="loginIcon"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <circle cx="10" cy="7" r="4" />
+            <path d="M3 20c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+          </svg>
+        </a>
+
+        <!-- Logged in user dropdown -->
+        <div class="user-dropdown" id="userDropdown" style="display: none">
+          <button class="nav-icon user-dropdown-toggle" id="userDropdownToggle">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <circle cx="10" cy="7" r="4" />
+              <path d="M3 20c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+            </svg>
+          </button>
+
+          <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-header">
+              <span id="userNameDisplay">Kullanıcı</span>
+            </div>
+            <a href="/profile.html" class="dropdown-item">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <circle cx="10" cy="7" r="4" />
+                <path d="M3 20c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+              </svg>
+              Profilim
+            </a>
+            <a href="/orders.html" class="dropdown-item">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M5 3h10l2 4v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7l2-4z" />
+                <path d="M3 7h14" />
+              </svg>
+              Siparişlerim
+            </a>
+            <a href="/favorites.html" class="dropdown-item">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              Favorilerim
+            </a>
+            <button class="dropdown-item logout-btn" id="logoutBtn">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M13 16l4-4-4-4" />
+                <path d="M17 12H7" />
+                <path d="M7 3H4a2 2 0 00-2 2v10a2 2 0 002 2h3" />
+              </svg>
+              Çıkış Yap
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .user-menu {
+    position: relative;
+  }
+
+  .user-dropdown {
+    position: relative;
+  }
+
+  .user-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 1rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .dropdown-item:hover {
+    background: var(--color-light-grey);
+    color: var(--text-primary);
+  }
+
+  .dropdown-item svg {
+    color: var(--text-secondary);
+  }
+
+  .logout-btn {
+    border-top: 1px solid var(--color-border);
+    color: #f44336;
+  }
+
+  .logout-btn:hover {
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  .logout-btn svg {
+    color: #f44336;
+  }
+  
+  /* Mobile Menu Button - Desktop'ta da göster */
+  .mobile-menu-btn {
+    display: block; /* Her zaman göster */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--color-white);
+    transition: all 0.3s;
+  }
+  
+  .mobile-menu-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .nav.scrolled .mobile-menu-btn {
+    color: var(--text-primary);
+  }
+</style>
+
+<script>
+  // Auth state management - Immediately Invoked
+  (function () {
+    function init() {
+      updateAuthUI();
+      initUserDropdown();
+      initLogout();
+      initMobileMenu();
+    }
+
+    // Run immediately when script loads
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      // DOM already loaded
+      init();
+    }
+
+    function updateAuthUI() {
+      // Get user from localStorage directly
+      const userStr = localStorage.getItem("silvre_user");
+      const user = userStr ? JSON.parse(userStr) : null;
+
+      const loginIcon = document.getElementById("loginIcon");
+      const userDropdown = document.getElementById("userDropdown");
+
+      console.log("Auth UI Update:", { user, loginIcon, userDropdown }); // Debug
+
+      if (!loginIcon || !userDropdown) {
+        console.warn("Header elements not found, retrying...");
+        setTimeout(updateAuthUI, 100);
+        return;
+      }
+
+      if (user) {
+        // User logged in - show dropdown
+        loginIcon.style.display = "none";
+        userDropdown.style.display = "block";
+
+        // Update user name
+        const userName = user.full_name || user.email.split("@")[0];
+        const userNameDisplay = document.getElementById("userNameDisplay");
+        if (userNameDisplay) {
+          userNameDisplay.textContent = userName;
+        }
+
+        console.log("User logged in:", userName); // Debug
+      } else {
+        // User not logged in - show login icon
+        loginIcon.style.display = "block";
+        userDropdown.style.display = "none";
+
+        console.log("No user logged in"); // Debug
+      }
+    }
+
+    function initUserDropdown() {
+      const toggle = document.getElementById("userDropdownToggle");
+      const menu = document.getElementById("dropdownMenu");
+
+      if (!toggle || !menu) {
+        console.warn("Dropdown elements not found");
+        return;
+      }
+
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        console.log("Toggle clicked, menu:", menu.classList); // Debug
+        menu.classList.toggle("show");
+      });
+
+      // Close on outside click
+      document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+          menu.classList.remove("show");
+        }
+      });
+
+      console.log("Dropdown initialized"); // Debug
+    }
+
+    function initLogout() {
+      const logoutBtn = document.getElementById("logoutBtn");
+
+      if (!logoutBtn) {
+        console.warn("Logout button not found");
+        return;
+      }
+
+      logoutBtn.addEventListener("click", () => {
+        console.log("Logout clicked"); // Debug
+
+        // Clear localStorage
+        localStorage.removeItem("silvre_auth_token");
+        localStorage.removeItem("silvre_user");
+
+        // Show success message
+        const toastContainer = document.getElementById("toastContainer");
+        if (toastContainer) {
+          const toast = document.createElement("div");
+          toast.className = "toast success";
+          toast.textContent = "Çıkış yapıldı";
+          toastContainer.appendChild(toast);
+          setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Redirect to home
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 500);
+      });
+
+      console.log("Logout initialized"); // Debug
+    }
+    
+    function initMobileMenu() {
+      // Retry mechanism - wait for elements
+      setTimeout(() => {
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const navMenu = document.getElementById("navMenu");
+        const navOverlay = document.getElementById("navOverlay");
+        const navMenuClose = document.getElementById("navMenuClose");
+        
+        if (!mobileMenuBtn || !navMenu) {
+          console.warn("Mobile menu elements not found, retrying...");
+          initMobileMenu();
+          return;
+        }
+        
+        console.log("Mobile menu elements found:", mobileMenuBtn, navMenu);
+        
+        // Open menu
+        mobileMenuBtn.onclick = function(e) {
+          e.stopPropagation();
+          navMenu.classList.add("active");
+          if (navOverlay) navOverlay.classList.add("active");
+          document.body.style.overflow = "hidden"; // Prevent scroll
+          console.log("Mobile menu opened");
+        };
+        
+        // Close menu - X button
+        if (navMenuClose) {
+          navMenuClose.onclick = function(e) {
+            e.stopPropagation();
+            closeMenu();
+          };
+        }
+        
+        // Close menu - Overlay click
+        if (navOverlay) {
+          navOverlay.onclick = function() {
+            closeMenu();
+          };
+        }
+        
+        // Close menu - Link click
+        navMenu.querySelectorAll(".nav-link").forEach(link => {
+          link.addEventListener("click", () => {
+            closeMenu();
+          });
+        });
+        
+        function closeMenu() {
+          navMenu.classList.remove("active");
+          if (navOverlay) navOverlay.classList.remove("active");
+          document.body.style.overflow = ""; // Restore scroll
+          console.log("Mobile menu closed");
+        }
+        
+        // Close on ESC key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && navMenu.classList.contains("active")) {
+            closeMenu();
+          }
+        });
+        
+        console.log("Mobile menu initialized successfully");
+      }, 200);
+    }
+    
+    // Re-init mobile menu after categories are loaded
+    window.reinitMobileMenu = initMobileMenu;
+  })();
+</script>

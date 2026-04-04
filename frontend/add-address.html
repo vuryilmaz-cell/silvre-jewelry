@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Adres Ekle - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .add-address-container {
+            margin-top: 120px;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+        }
+
+        .form-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 2.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .required {
+            color: #f44336;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-size: 0.9375rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-charcoal);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--color-light-grey);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-checkbox:hover {
+            background: var(--color-medium-grey);
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .form-checkbox-label {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-cancel {
+            background: var(--color-light-grey);
+            color: var(--text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-cancel:hover {
+            background: var(--color-medium-grey);
+            transform: none;
+        }
+
+        .helper-text {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Add Address Container -->
+    <section class="container add-address-container">
+        <div class="page-header">
+            <h1>Yeni Adres Ekle</h1>
+            <p>Teslimat adresinizi ekleyin</p>
+        </div>
+
+        <div class="form-card">
+            <form id="addressForm">
+                <!-- Address Title -->
+                <div class="form-section">
+                    <h3 class="section-title">Adres Başlığı</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Başlık <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="title" placeholder="Ev, İş, Diğer..." required>
+                        <p class="helper-text">Bu adresi tanımlamak için bir başlık girin</p>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h3 class="section-title">İletişim Bilgileri</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Ad <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="firstName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Soyad <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="lastName" required>
+                        </div>
+
+                        <div class="form-group full">
+                            <label class="form-label">Telefon <span class="required">*</span></label>
+                            <input type="tel" class="form-input" id="phone" placeholder="0532 123 45 67" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Details -->
+                <div class="form-section">
+                    <h3 class="section-title">Adres Detayları</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">İl <span class="required">*</span></label>
+                            <select class="form-select" id="city" required>
+                                <option value="">İl Seçin</option>
+                                <option value="İstanbul">İstanbul</option>
+                                <option value="Ankara">Ankara</option>
+                                <option value="İzmir">İzmir</option>
+                                <option value="Bursa">Bursa</option>
+                                <option value="Antalya">Antalya</option>
+                                <option value="Adana">Adana</option>
+                                <option value="Konya">Konya</option>
+                                <option value="Gaziantep">Gaziantep</option>
+                                <option value="Şanlıurfa">Şanlıurfa</option>
+                                <option value="Kocaeli">Kocaeli</option>
+                                <option value="Mersin">Mersin</option>
+                                <option value="Diyarbakır">Diyarbakır</option>
+                                <option value="Hatay">Hatay</option>
+                                <option value="Manisa">Manisa</option>
+                                <option value="Kayseri">Kayseri</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">İlçe <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="district" placeholder="İlçe" required>
+                        </div>
+
+                        <div class="form-group full">
+                            <label class="form-label">Adres <span class="required">*</span></label>
+                            <textarea class="form-textarea" id="addressLine" placeholder="Mahalle, sokak, cadde, bina no, daire no..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Posta Kodu</label>
+                            <input type="text" class="form-input" id="postalCode" placeholder="34000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Default Address -->
+                <div class="form-section">
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="isDefault">
+                        <label for="isDefault" class="form-checkbox-label">
+                            Bu adresi varsayılan adresim olarak kaydet
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="window.history.back()">İptal</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Adresi Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auth check
+            if (!auth.isAuthenticated()) {
+                window.location.href = '/login.html?redirect=/add-address.html';
+                return;
+            }
+
+            // Init form
+            initAddressForm();
+        });
+
+        function initAddressForm() {
+            document.getElementById('addressForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Collect form data
+                const addressData = {
+                    title: document.getElementById('title').value.trim(),
+                    first_name: document.getElementById('firstName').value.trim(),
+                    last_name: document.getElementById('lastName').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    city: document.getElementById('city').value,
+                    district: document.getElementById('district').value.trim(),
+                    address_line: document.getElementById('addressLine').value.trim(),
+                    postal_code: document.getElementById('postalCode').value.trim() || null,
+                    is_default: document.getElementById('isDefault').checked
+                };
+
+                // Validation
+                if (!addressData.title || !addressData.first_name || !addressData.last_name || 
+                    !addressData.phone || !addressData.city || !addressData.district || 
+                    !addressData.address_line) {
+                    showToast('Lütfen tüm zorunlu alanları doldurun', 'error');
+                    return;
+                }
+
+                try {
+                    // Disable submit button
+                    const submitBtn = e.target.querySelector('button[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Kaydediliyor...';
+
+                    await api.createAddress(addressData);
+
+                    showToast('Adres başarıyla eklendi', 'success');
+
+                    // Redirect to profile page after 1 second
+                    setTimeout(() => {
+                        window.location.href = '/profile.html';
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Add address error:', error);
+                    showToast(error.message || 'Adres eklenirken hata oluştu', 'error');
+
+                    // Re-enable submit button
+                    const submitBtn = e.target.querySelector('button[type="submit"]');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Adresi Kaydet';
+                }
+            });
+
+            // Phone formatting (optional)
+            document.getElementById('phone').addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 0) {
+                    // Format: 0532 123 45 67
+                    if (value.length <= 4) {
+                        e.target.value = value;
+                    } else if (value.length <= 7) {
+                        e.target.value = value.slice(0, 4) + ' ' + value.slice(4);
+                    } else if (value.length <= 9) {
+                        e.target.value = value.slice(0, 4) + ' ' + value.slice(4, 7) + ' ' + value.slice(7);
+                    } else {
+                        e.target.value = value.slice(0, 4) + ' ' + value.slice(4, 7) + ' ' + value.slice(7, 9) + ' ' + value.slice(9, 11);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

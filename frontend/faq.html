@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sıkça Sorulan Sorular - Silvre Jewelry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- FAQ Fonksiyonları - HEAD'de tanımla (onclick için gerekli) -->
+    <script>
+      function toggleFAQ(element) {
+        const faqItem = element.parentElement;
+        const wasActive = faqItem.classList.contains("active");
+
+        document.querySelectorAll(".faq-item.active").forEach((item) => {
+          if (item !== faqItem) item.classList.remove("active");
+        });
+
+        if (wasActive) {
+          faqItem.classList.remove("active");
+        } else {
+          faqItem.classList.add("active");
+        }
+      }
+
+      function filterCategory(category) {
+        document.querySelectorAll(".category-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        event.target.classList.add("active");
+
+        const sections = document.querySelectorAll(".faq-section");
+        sections.forEach((section) => {
+          if (category === "all") {
+            section.style.display = "block";
+          } else {
+            section.style.display =
+              section.dataset.category === category ? "block" : "none";
+          }
+        });
+
+        document.querySelectorAll(".faq-item.active").forEach((item) => {
+          item.classList.remove("active");
+        });
+      }
+    </script>
+
+    <style>
+      .faq-container {
+        margin-top: 120px;
+        margin-bottom: 4rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .page-header h1 {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-header p {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+      }
+
+      .faq-categories {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .category-btn {
+        padding: 0.75rem 1.5rem;
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 24px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+      }
+
+      .category-btn:hover {
+        border-color: var(--color-charcoal);
+        color: var(--text-primary);
+      }
+
+      .category-btn.active {
+        background: var(--color-charcoal);
+        color: var(--color-white);
+        border-color: var(--color-charcoal);
+      }
+
+      .faq-section {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-family: var(--font-heading);
+        font-size: 1.75rem;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--color-border);
+      }
+
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .faq-item {
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s;
+      }
+
+      .faq-item:hover {
+        box-shadow: var(--shadow-sm);
+      }
+
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
+        user-select: none;
+        gap: 1rem;
+      }
+
+      .faq-question-text {
+        font-weight: 500;
+        font-size: 1.0625rem;
+        color: var(--text-primary);
+        flex: 1;
+      }
+
+      .faq-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 1000px;
+      }
+
+      .faq-answer-content {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .faq-answer-content ul {
+        margin: 0.75rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .faq-answer-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      .faq-answer-content strong {
+        color: var(--text-primary);
+      }
+
+      .contact-cta {
+        background: var(--color-light-grey);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .contact-cta h3 {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-cta p {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      @media (max-width: 640px) {
+        .faq-question {
+          padding: 1rem;
+        }
+
+        .faq-question-text {
+          font-size: 1rem;
+        }
+
+        .faq-answer-content {
+          padding: 0 1rem 1rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- FAQ Container -->
+    <section class="container faq-container">
+      <div class="page-header">
+        <h1>Sıkça Sorulan Sorular</h1>
+        <p>Aklınıza takılan soruların cevaplarını bulun</p>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="faq-categories">
+        <button class="category-btn active" onclick="filterCategory('all')">
+          Tümü
+        </button>
+        <button class="category-btn" onclick="filterCategory('siparis')">
+          Sipariş & Teslimat
+        </button>
+        <button class="category-btn" onclick="filterCategory('urun')">
+          Ürünler
+        </button>
+        <button class="category-btn" onclick="filterCategory('odeme')">
+          Ödeme
+        </button>
+        <button class="category-btn" onclick="filterCategory('iade')">
+          İade & Değişim
+        </button>
+        <button class="category-btn" onclick="filterCategory('uyelik')">
+          Üyelik
+        </button>
+      </div>
+
+      <!-- FAQ Sections -->
+      <div id="faqContainer">
+        <!-- Sipariş & Teslimat -->
+        <div class="faq-section" data-category="siparis">
+          <h2 class="section-title">Sipariş & Teslimat</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Siparişim ne zaman kargoya verilir?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Siparişleriniz el işçiliği ile size özel üretilmekte olup,
+                  ödeme onayından sonra 10 iş günü içinde kargoya verilir. Hafta
+                  sonları ve resmi tatil günlerinde kargo çıkışı
+                  yapılmamaktadır. Siparişinizin durumunu "Siparişlerim"
+                  sayfasından takip edebilirsiniz.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text">Kargo ücreti ne kadardır?</span>
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <strong
+                    >10000 TL ve üzeri alışverişlerde kargo ücretsizdir.</strong
+                  >
+                  10000 TL altındaki siparişlerde kargo ücreti sepet toplam
+                  tutarınıza eklenir. Kargo ücreti bölgeye göre değişiklik
+                  gösterebilir.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Siparişimi nasıl takip edebilirim?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Siparişinizi takip etmek için:
+                  <ul>
+                    <li>Hesabınıza giriş yapın</li>
+                    <li>"Siparişlerim" bölümüne gidin</li>
+                    <li>İlgili siparişi seçin</li>
+                    <li>
+                      Kargo takip numaranızı görebilir ve kargo firması web
+                      sitesinden takip edebilirsiniz
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Hangi kargo firmaları ile çalışıyorsunuz?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Aras Kargo, Yurtiçi Kargo ve MNG Kargo ile çalışmaktayız.
+                  Kargo firması seçimi, bölgenize ve ürün özelliklerine göre
+                  otomatik olarak belirlenir.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ürünler -->
+        <div class="faq-section" data-category="urun">
+          <h2 class="section-title">Ürünler</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Ürünleriniz orijinal gümüş müdür?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Evet, tüm ürünlerimiz <strong>999 ayar gümüş</strong> ten
+                  üretilmektedir. Ürünlerimiz kalite kontrol süreçlerinden
+                  geçerek size ulaşır.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Gümüş takıların bakımı nasıl yapılır?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Gümüş takılarınızın uzun ömürlü olması için:
+                  <ul>
+                    <li>Parfüm, deodorant ve krem kullandıktan sonra takın</li>
+                    <li>Duş, havuz ve denize girerken çıkarın</li>
+                    <li>Hava almayan kapalı kutularda saklayın</li>
+                    <li>Yumuşak bir bezle silerek temizleyin</li>
+                    <li>
+                      Kararma durumunda gümüş temizleme sıvısı kullanabilirsiniz
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Ürün stokları ne zaman güncellenir?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Stok durumlarımız anlık olarak güncellenmektedir. Stokta
+                  olmayan ürünler için "Stokta Yok" uyarısı görürsünüz. Stok
+                  girişlerinden haberdar olmak için ürünü favorilerinize
+                  ekleyebilirsiniz.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ödeme -->
+        <div class="faq-section" data-category="odeme">
+          <h2 class="section-title">Ödeme</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Hangi ödeme yöntemlerini kabul ediyorsunuz?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Aşağıdaki ödeme yöntemlerini kabul ediyoruz:
+                  <ul>
+                    <li>Kredi Kartı (Tek Çekim ve Taksit)</li>
+                    <li>Banka Kartı</li>
+                    <li>Havale/EFT</li>
+                    <li>Kapıda Ödeme (Seçili bölgelerde)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Taksit seçenekleriniz nelerdir?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Kredi kartı ile
+                  <strong>2, 3, 6, 9 ve 12 taksit</strong> seçenekleri
+                  sunmaktayız. Taksit seçenekleri ve faiz oranları kartınızın
+                  bankasına göre değişiklik gösterebilir.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Ödeme bilgilerim güvende mi?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Evet, tüm ödeme işlemleriniz
+                  <strong>SSL sertifikası</strong> ile şifrelenmektedir. Kredi
+                  kartı bilgileriniz sunucularımızda saklanmaz. Ödeme altyapımız
+                  PCI-DSS standartlarına uygundur.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- İade & Değişim -->
+        <div class="faq-section" data-category="iade">
+          <h2 class="section-title">İade & Değişim</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text">İade sürem ne kadar?</span>
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Ürünü teslim aldığınız tarihten itibaren
+                  <strong>14 gün</strong> içerisinde iade edebilirsiniz. İade
+                  edilecek ürünün kullanılmamış, etiketleri sökülmemiş ve
+                  orijinal ambalajında olması gerekmektedir.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >İade işlemini nasıl başlatabilirim?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  İade işlemi için:
+                  <ul>
+                    <li>Hesabınıza giriş yapın</li>
+                    <li>"Siparişlerim" bölümüne gidin</li>
+                    <li>İade etmek istediğiniz siparişi seçin</li>
+                    <li>"İade Talebi Oluştur" butonuna tıklayın</li>
+                    <li>Formu doldurun ve gönderin</li>
+                  </ul>
+                  Alternatif olarak info@silvre.com adresine e-posta
+                  gönderebilirsiniz.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >İade kargo ücreti kime ait?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Cayma hakkı kullanımı durumunda iade kargo ücreti müşteriye
+                  aittir. Ürün hatalı veya hasarlı geldiği durumda iade kargo
+                  ücreti tarafımızca karşılanır.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >İade paramı ne zaman alırım?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  İade ürününüz depomuzda kontrol edildikten sonra, ödeme
+                  yönteminize göre iade işlemi başlatılır:
+                  <ul>
+                    <li>
+                      <strong>Kredi Kartı:</strong> 2-7 iş günü içinde kartınıza
+                      iade edilir
+                    </li>
+                    <li>
+                      <strong>Havale/EFT:</strong> Belirttiğiniz IBAN'a 1-3 iş
+                      günü içinde iade edilir
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Üyelik -->
+        <div class="faq-section" data-category="uyelik">
+          <h2 class="section-title">Üyelik</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Üyeliksiz alışveriş yapabilir miyim?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Hayır, sipariş verebilmek için üye olmanız gerekmektedir.
+                  Üyelik tamamen ücretsizdir ve sadece birkaç dakika sürer. Üye
+                  olarak favoriler, sipariş geçmişi ve hızlı ödeme gibi
+                  avantajlardan yararlanabilirsiniz.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Şifremi unuttum, ne yapmalıyım?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Giriş sayfasındaki "Şifremi Unuttum" linkine tıklayın. E-posta
+                  adresinizi girin, size şifre sıfırlama linki gönderilecektir.
+                  Link üzerinden yeni şifrenizi belirleyebilirsiniz.
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFAQ(this)">
+                <span class="faq-question-text"
+                  >Hesabımı nasıl silebilirim?</span
+                >
+                <svg
+                  class="faq-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  Hesabınızı silmek için info@silvre.com adresine e-posta
+                  göndererek talepte bulunabilirsiniz. Hesap silme işlemi geri
+                  alınamaz ve tüm verileriniz silinir.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="contact-cta">
+        <h3>Aradığınız cevabı bulamadınız mı?</h3>
+        <p>Müşteri hizmetlerimiz size yardımcı olmaktan mutluluk duyar</p>
+        <a href="/contact.html" class="btn btn-primary">Bize Ulaşın</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      // Auto-open first FAQ
+      document.addEventListener("DOMContentLoaded", () => {
+        const firstFAQ = document.querySelector(".faq-item");
+        if (firstFAQ) {
+          firstFAQ.classList.add("active");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sipariş Yönetimi - Silvre Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h1>SILVRE</h1>
+          <p>Admin Panel</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="/index.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="6" height="6" />
+              <rect x="11" y="3" width="6" height="6" />
+              <rect x="3" y="11" width="6" height="6" />
+              <rect x="11" y="11" width="6" height="6" />
+            </svg>
+            Dashboard
+          </a>
+
+          <a href="/products.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="3" y="3" width="14" height="14" rx="2" />
+            </svg>
+            Ürünler
+          </a>
+
+          <a href="/orders.html" class="nav-item active">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M3 3H5L6.5 13H16.5L18 6H6" />
+              <circle cx="7" cy="17" r="1" fill="currentColor" />
+              <circle cx="15" cy="17" r="1" fill="currentColor" />
+            </svg>
+            Siparişler
+          </a>
+
+          <a href="/categories.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M4 6h12M4 10h12M4 14h12" />
+            </svg>
+            Kategoriler
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="logout-btn" id="logoutBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M14 16l4-4-4-4M18 12H8M8 16V4" />
+            </svg>
+            Çıkış Yap
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="content-header">
+          <h2>Sipariş Yönetimi</h2>
+          <div class="header-actions">
+            <span id="currentUser"></span>
+          </div>
+        </header>
+
+        <!-- Filters -->
+        <div class="content-section">
+          <div class="filters-row">
+            <select class="form-select" id="statusFilter" style="width: 200px">
+              <option value="">Tüm Durumlar</option>
+              <option value="pending">Beklemede</option>
+              <option value="confirmed">Onaylandı</option>
+              <option value="processing">Hazırlanıyor</option>
+              <option value="shipped">Kargoda</option>
+              <option value="delivered">Teslim Edildi</option>
+              <option value="cancelled">İptal</option>
+            </select>
+
+            <input
+              type="search"
+              class="form-input"
+              id="searchInput"
+              placeholder="Sipariş no veya müşteri ara..."
+              style="max-width: 300px"
+            />
+          </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="content-section">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Sipariş No</th>
+                  <th>Müşteri</th>
+                  <th>Ürün Sayısı</th>
+                  <th>Tutar</th>
+                  <th>Durum</th>
+                  <th>Tarih</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTable">
+                <tr>
+                  <td colspan="7" class="loading">Yükleniyor...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination" id="pagination" style="display: none">
+            <button class="btn btn-sm btn-secondary" id="prevBtn" disabled>
+              ← Önceki
+            </button>
+            <span id="pageInfo">Sayfa 1</span>
+            <button class="btn btn-sm btn-secondary" id="nextBtn">
+              Sonraki →
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal" id="orderModal">
+      <div class="modal-content" style="max-width: 800px">
+        <div class="modal-header">
+          <h3>Sipariş Detayı</h3>
+          <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body" id="orderModalBody">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+      let currentPage = 0;
+      let totalOrders = 0;
+      const limit = 20;
+      let currentStatus = "";
+      let searchTerm = "";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // URL'den arama parametresini al
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchParam = urlParams.get("search");
+
+        if (searchParam) {
+          searchTerm = searchParam;
+          const searchInput = document.getElementById("searchInput");
+          if (searchInput) {
+            searchInput.value = searchParam;
+          }
+        }
+
+        await loadOrders();
+        initFilters();
+        initPagination();
+        initModal();
+      });
+
+      async function loadOrders() {
+        const tableBody = document.getElementById("ordersTable");
+
+        try {
+          const params = {
+            limit,
+            offset: currentPage * limit,
+            sort: "-created_at",
+          };
+
+          if (currentStatus) {
+            params.status = currentStatus;
+          }
+
+          const data = await api.getAllOrders(params);
+          const orders = data.orders || [];
+          totalOrders = data.pagination?.total || 0;
+
+          if (orders.length === 0) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #999;">
+                  ${
+                    currentStatus || searchTerm
+                      ? "Filtre kriterlerine uygun sipariş bulunamadı"
+                      : "Henüz sipariş bulunmuyor"
+                  }
+                </td>
+              </tr>
+            `;
+            document.getElementById("pagination").style.display = "none";
+            return;
+          }
+
+          // Search filter (client-side)
+          let filteredOrders = orders;
+          if (searchTerm) {
+            filteredOrders = orders.filter(
+              (order) =>
+                order.order_number
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase()) ||
+                (order.customer_name &&
+                  order.customer_name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())) ||
+                (order.email &&
+                  order.email.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+          }
+
+          tableBody.innerHTML = filteredOrders
+            .map(
+              (order) => `
+            <tr>
+              <td><strong>${order.order_number}</strong></td>
+              <td>
+                ${order.customer_name || order.email || "-"}<br>
+                <small style="color: #999;">${order.email || ""}</small>
+              </td>
+              <td>${order.items_count || 0}</td>
+              <td>${formatPrice(order.total)}</td>
+              <td>${getStatusBadge(order.status)}</td>
+              <td>${formatDate(order.created_at)}</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" onclick="viewOrder(${
+                  order.id
+                })">
+                  Detay
+                </button>
+              </td>
+            </tr>
+          `
+            )
+            .join("");
+
+          updatePagination();
+        } catch (error) {
+          console.error("Load orders error:", error);
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 2rem; color: #f44336;">
+                Siparişler yüklenirken hata oluştu: ${error.message}
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      function initFilters() {
+        document
+          .getElementById("statusFilter")
+          .addEventListener("change", (e) => {
+            currentStatus = e.target.value;
+            currentPage = 0;
+            loadOrders();
+          });
+
+        document.getElementById("searchInput").addEventListener(
+          "input",
+          debounce((e) => {
+            searchTerm = e.target.value.trim();
+            currentPage = 0;
+            loadOrders();
+          }, 300)
+        );
+      }
+
+      function initPagination() {
+        document.getElementById("prevBtn").addEventListener("click", () => {
+          if (currentPage > 0) {
+            currentPage--;
+            loadOrders();
+          }
+        });
+
+        document.getElementById("nextBtn").addEventListener("click", () => {
+          if ((currentPage + 1) * limit < totalOrders) {
+            currentPage++;
+            loadOrders();
+          }
+        });
+      }
+
+      function updatePagination() {
+        const pagination = document.getElementById("pagination");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const pageInfo = document.getElementById("pageInfo");
+
+        if (totalOrders > limit) {
+          pagination.style.display = "flex";
+          pageInfo.textContent = `Sayfa ${currentPage + 1} / ${Math.ceil(
+            totalOrders / limit
+          )}`;
+          prevBtn.disabled = currentPage === 0;
+          nextBtn.disabled = (currentPage + 1) * limit >= totalOrders;
+        } else {
+          pagination.style.display = "none";
+        }
+      }
+
+      async function viewOrder(orderId) {
+        const modal = document.getElementById("orderModal");
+        const modalBody = document.getElementById("orderModalBody");
+
+        try {
+          modalBody.innerHTML =
+            '<p style="text-align: center; padding: 2rem;">Yükleniyor...</p>';
+          modal.classList.add("active");
+
+          const order = await api.getAdminOrder(orderId);
+
+          modalBody.innerHTML = `
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <!-- Order Info -->
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">
+                <div>
+                  <p style="font-size: 0.75rem; color: #999; margin-bottom: 0.25rem;">SİPARİŞ NO</p>
+                  <p style="font-weight: 600;">${order.order_number}</p>
+                </div>
+                <div>
+                  <p style="font-size: 0.75rem; color: #999; margin-bottom: 0.25rem;">TARİH</p>
+                  <p>${formatDate(order.created_at)}</p>
+                </div>
+                <div>
+                  <p style="font-size: 0.75rem; color: #999; margin-bottom: 0.25rem;">MÜŞTERİ</p>
+                  <p>${order.first_name} ${order.last_name}</p>
+                </div>
+                <div>
+                  <p style="font-size: 0.75rem; color: #999; margin-bottom: 0.25rem;">DURUM</p>
+                  <div>
+                    <select class="form-select" id="orderStatus" style="padding: 0.375rem 0.75rem; font-size: 0.875rem;">
+                      <option value="pending" ${
+                        order.status === "pending" ? "selected" : ""
+                      }>Beklemede</option>
+                      <option value="confirmed" ${
+                        order.status === "confirmed" ? "selected" : ""
+                      }>Onaylandı</option>
+                      <option value="processing" ${
+                        order.status === "processing" ? "selected" : ""
+                      }>Hazırlanıyor</option>
+                      <option value="shipped" ${
+                        order.status === "shipped" ? "selected" : ""
+                      }>Kargoda</option>
+                      <option value="delivered" ${
+                        order.status === "delivered" ? "selected" : ""
+                      }>Teslim Edildi</option>
+                      <option value="cancelled" ${
+                        order.status === "cancelled" ? "selected" : ""
+                      }>İptal</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" onclick="updateOrderStatus(${
+                      order.id
+                    })" style="margin-top: 0.5rem;">
+                      Durumu Güncelle
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div>
+                <h4 style="margin-bottom: 0.75rem;">Teslimat Adresi</h4>
+                <div style="background: var(--color-bg); padding: 1rem; border-radius: 6px;">
+                  <p><strong>${order.first_name} ${order.last_name}</strong></p>
+                  <p>${order.phone || "-"}</p>
+                  <p>${order.address_line || "-"}</p>
+                  <p>${order.district || ""} ${order.city || ""}</p>
+                </div>
+              </div>
+
+              <!-- Items -->
+              <div>
+                <h4 style="margin-bottom: 0.75rem;">Sipariş Kalemleri</h4>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                  ${order.items
+                    .map(
+                      (item) => `
+                    <div style="display: flex; gap: 1rem; padding: 1rem; background: var(--color-bg); border-radius: 6px;">
+                      <img src="${item.image || "/images/placeholder.jpg"}" 
+                           style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;"
+                           onerror="this.src='/images/placeholder.jpg'">
+                      <div style="flex: 1;">
+                        <p style="font-weight: 500; margin-bottom: 0.25rem;">${
+                          item.name
+                        }</p>
+                        <p style="font-size: 0.875rem; color: #999;">Adet: ${
+                          item.quantity
+                        }</p>
+                      </div>
+                      <div style="text-align: right;">
+                        <p style="font-weight: 500;">${formatPrice(
+                          item.subtotal
+                        )}</p>
+                        <p style="font-size: 0.875rem; color: #999;">${formatPrice(
+                          item.price
+                        )} x ${item.quantity}</p>
+                      </div>
+                    </div>
+                  `
+                    )
+                    .join("")}
+                </div>
+              </div>
+
+              <!-- Summary -->
+              <div style="background: var(--color-bg); padding: 1rem; border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <span>Ara Toplam</span>
+                  <span>${formatPrice(order.subtotal)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <span>Kargo</span>
+                  <span>${formatPrice(order.shipping_cost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--color-border); font-weight: 600; font-size: 1.125rem;">
+                  <span>Toplam</span>
+                  <span>${formatPrice(order.total)}</span>
+                </div>
+              </div>
+
+              ${
+                order.notes
+                  ? `
+                <div>
+                  <h4 style="margin-bottom: 0.5rem;">Sipariş Notları</h4>
+                  <p style="color: #666;">${order.notes}</p>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          `;
+        } catch (error) {
+          console.error("View order error:", error);
+          modalBody.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: #f44336;">
+              <p>Sipariş detayları yüklenemedi</p>
+              <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      async function updateOrderStatus(orderId) {
+        const newStatus = document.getElementById("orderStatus").value;
+
+        if (
+          !confirm("Sipariş durumunu güncellemek istediğinize emin misiniz?")
+        ) {
+          return;
+        }
+
+        try {
+          await api.updateOrderStatus(orderId, newStatus);
+          alert("Sipariş durumu güncellendi");
+
+          // Reload orders and close modal
+          await loadOrders();
+          document.getElementById("orderModal").classList.remove("active");
+        } catch (error) {
+          console.error("Update status error:", error);
+          alert("Durum güncellenirken hata oluştu: " + error.message);
+        }
+      }
+
+      function initModal() {
+        const modal = document.getElementById("orderModal");
+        const closeBtn = document.getElementById("closeModal");
+
+        closeBtn.addEventListener("click", () => {
+          modal.classList.remove("active");
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("active");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
