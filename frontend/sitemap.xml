@@ -4,7 +4,7 @@
   
   <!-- Ana Sayfa -->
   <url>
-    <loc>https://silvre.com/</loc>
+    <loc>https://slvr.com.tr/</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -12,7 +12,7 @@
   
   <!-- Ürünler Sayfası -->
   <url>
-    <loc>https://silvre.com/products.html</loc>
+    <loc>https://slvr.com.tr/products.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
@@ -20,7 +20,7 @@
   
   <!-- Kategoriler -->
   <url>
-    <loc>https://silvre.com/categories.html</loc>
+    <loc>https://slvr.com.tr/categories.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -28,7 +28,7 @@
   
   <!-- Hakkımızda -->
   <url>
-    <loc>https://silvre.com/about.html</loc>
+    <loc>https://slvr.com.tr/about.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -36,7 +36,7 @@
   
   <!-- İletişim -->
   <url>
-    <loc>https://silvre.com/contact.html</loc>
+    <loc>https://slvr.com.tr/contact.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -44,7 +44,7 @@
   
   <!-- SSS -->
   <url>
-    <loc>https://silvre.com/faq.html</loc>
+    <loc>https://slvr.com.tr/faq.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -52,14 +52,14 @@
   
   <!-- Kargo ve İade -->
   <url>
-    <loc>https://silvre.com/shipping.html</loc>
+    <loc>https://slvr.com.tr/shipping.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://silvre.com/returns.html</loc>
+    <loc>https://slvr.com.tr/returns.html</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -73,7 +73,7 @@
   <!-- Örnek Kategori URL'leri -->
   <!-- 
   <url>
-    <loc>https://silvre.com/kategori/kolyeler</loc>
+    <loc>https://slvr.com.tr/kategori/kolyeler</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -83,12 +83,12 @@
   <!-- Örnek Ürün URL'leri -->
   <!--
   <url>
-    <loc>https://silvre.com/urun/gumus-kalp-kolye</loc>
+    <loc>https://slvr.com.tr/urun/gumus-kalp-kolye</loc>
     <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://silvre.com/uploads/kalp-kolye.jpg</image:loc>
+      <image:loc>https://slvr.com.tr/uploads/kalp-kolye.jpg</image:loc>
       <image:title>Gümüş Kalp Kolye</image:title>
     </image:image>
   </url>

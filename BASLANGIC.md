@@ -3,6 +3,7 @@
 ## 🚀 Kurulum Adımları
 
 ### 1. Gereksinimler
+
 - Node.js (v16 veya üstü)
 - npm veya yarn
 
@@ -64,6 +65,7 @@ npx http-server -p 3001
 Admin panel şimdi http://localhost:3001 adresinde çalışıyor.
 
 **İlk Giriş:**
+
 - Email: .env dosyasında belirlediğiniz ADMIN_EMAIL
 - Şifre: .env dosyasında belirlediğiniz ADMIN_PASSWORD
 
@@ -110,10 +112,12 @@ silvre-jewelry/
 ## 🔑 İlk Adımlar
 
 ### 1. Admin Paneline Giriş
+
 - http://localhost:3001 adresine gidin
 - .env dosyasındaki admin bilgileri ile giriş yapın
 
 ### 2. Ürün Ekleme
+
 - Admin Panel → Ürünler → Yeni Ürün
 - Ürün bilgilerini doldurun
 - Kategori seçin
@@ -121,6 +125,7 @@ silvre-jewelry/
 - Kaydet
 
 ### 3. Kategori Yönetimi
+
 - Admin Panel → Kategoriler
 - Varsayılan kategoriler zaten mevcut:
   - Kolyeler
@@ -130,8 +135,10 @@ silvre-jewelry/
   - Setler
 
 ### 4. Görsel Yükleme
+
 Şu an için görseller manuel olarak `/backend/uploads` klasörüne konulmalı.
 Gelecekte:
+
 - Multer ile dosya yükleme eklenecek
 - Admin panelde sürükle-bırak upload
 
@@ -196,14 +203,17 @@ vercel --prod
 ## 🔐 Güvenlik Notları
 
 1. **Production .env:**
+
    - Güçlü JWT_SECRET kullanın (en az 32 karakter)
    - Database şifrelerini güçlü yapın
    - Email credentials'ı güvenli saklayın
 
 2. **CORS:**
+
    - Production'da FRONTEND_URL ve ADMIN_URL'i gerçek domain'lerinize ayarlayın
 
 3. **SSL:**
+
    - Production'da mutlaka HTTPS kullanın
 
 4. **Rate Limiting:**
@@ -214,18 +224,20 @@ vercel --prod
 ## 🎨 Özelleştirme
 
 ### Renk Değişikliği
+
 `frontend/css/style.css` dosyasında CSS değişkenlerini düzenleyin:
 
 ```css
 :root {
-  --color-accent: #8B7355;  /* Ana vurgu rengi */
-  --color-off-black: #1A1A1A;
-  --color-cream: #FAF8F5;
+  --color-accent: #8b7355; /* Ana vurgu rengi */
+  --color-off-black: #1a1a1a;
+  --color-cream: #faf8f5;
   /* ... */
 }
 ```
 
 ### Logo Ekleme
+
 - `/frontend/images/logo.png` dosyasını ekleyin
 - `index.html` içindeki logo kısmını güncelleyin
 
@@ -234,8 +246,9 @@ vercel --prod
 ## 📧 Destek
 
 Sorularınız için:
+
 - GitHub Issues açın
-- Email: support@silvre.com
+- Email: support@slvr.com.tr
 
 ---
 

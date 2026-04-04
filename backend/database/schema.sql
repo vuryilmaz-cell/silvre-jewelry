@@ -196,7 +196,7 @@ CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id);
 -- Initial Settings
 INSERT OR IGNORE INTO settings (setting_key, setting_value) VALUES
 ('site_name', 'Silvre Jewelry'),
-('site_email', 'info@silvre.com'),
+('site_email', 'info@slvr.com.tr'),
 ('free_shipping_threshold', '500'),
 ('currency', 'TRY'),
 ('tax_rate', '20');

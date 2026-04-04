@@ -201,9 +201,9 @@ const SEO = {
     
     // Breadcrumb
     this.updateBreadcrumb([
-      { name: 'Ana Sayfa', url: 'https://silvre.com' },
-      { name: 'Ürünler', url: 'https://silvre.com/products.html' },
-      { name: categoryName, url: `https://silvre.com/categories.html?category=${product.category_slug}` },
+      { name: 'Ana Sayfa', url: 'https://slvr.com.tr' },
+      { name: 'Ürünler', url: 'https://slvr.com.tr/products.html' },
+      { name: categoryName, url: `https://slvr.com.tr/categories.html?category=${product.category_slug}` },
       { name: productName, url: window.location.href }
     ]);
   },

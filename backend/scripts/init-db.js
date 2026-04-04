@@ -9,7 +9,7 @@ async function initDB() {
     await initializeDatabase();
 
     // Create admin user if not exists
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@silvre.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@slvr.com.tr';
     const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
 
     const existingAdmin = await dbAsync.get('SELECT id FROM users WHERE email = ?', [adminEmail]);

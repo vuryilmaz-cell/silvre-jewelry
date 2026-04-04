@@ -7,7 +7,7 @@ const router = express.Router();
 // Dinamik Sitemap Generator
 router.get('/sitemap.xml', async (req, res) => {
   try {
-    const baseUrl = process.env.FRONTEND_URL || 'https://silvre.com';
+    const baseUrl = process.env.FRONTEND_URL || 'https://slvr.com.tr';
     const today = new Date().toISOString().split('T')[0];
     
     // Kategorileri al

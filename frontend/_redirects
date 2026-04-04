@@ -5,8 +5,8 @@
 /kategoriler/:cat  /categories.html?category=:cat  200
 
 # HTTPS redirect (Netlify otomatik yapar, ama manuel için)
-http://silvre.com/*  https://silvre.com/:splat  301!
-http://www.silvre.com/*  https://silvre.com/:splat  301!
+http://slvr.com.tr/*  https://slvr.com.tr/:splat  301!
+http://www.slvr.com.tr/*  https://slvr.com.tr/:splat  301!
 
 # 404 redirect
 /*  /404.html  404
